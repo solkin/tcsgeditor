@@ -69,8 +69,6 @@ public class PreviewPanel extends javax.swing.JPanel {
     /** Drawing back **/
     g.setColor( Color.white );
     g.fillRect( 0, 0, getWidth(), getHeight() );
-    g.setColor( Color.black );
-    g.drawLine( 0, 0, getWidth(), getHeight() );
     /** Locating **/
     figure.setDrawLocation( 0, 0 );
     /** Fixing time **/
