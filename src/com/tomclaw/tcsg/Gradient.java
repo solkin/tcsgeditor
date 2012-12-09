@@ -114,7 +114,7 @@ public class Gradient extends Primitive {
     colorFinl = ( ( Color ) fields[5][1] ).getRGB();
     isProportional = ( Boolean ) fields[6][1];
     isFill = ( Boolean ) fields[7][1];
-    isVertical = ( ( Selector ) fields[8][1] ).getSelectedIndex() == 1
+    isVertical = ( ( Selector ) fields[8][1] ).getSelectedIndex() == 0
             ? true : false;
   }
 }
