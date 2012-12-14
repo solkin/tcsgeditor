@@ -9,6 +9,12 @@ import com.tomclaw.tcsg.ScaleGraphics;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,6 +26,7 @@ public class MainFrame extends javax.swing.JFrame {
 
   public EditorPanel ePanel;
   private Primitive activePrimitive;
+  public String author;
 
   /** Creates new form MainFrame */
   public MainFrame() {
@@ -28,6 +35,7 @@ public class MainFrame extends javax.swing.JFrame {
     setLocationRelativeTo( null );
     /** Sample figure **/
     createFigure( "figure1", 32, 32 );
+    author = "TomClaw Software";
   }
 
   /**
@@ -273,6 +281,39 @@ public class MainFrame extends javax.swing.JFrame {
     propertiesPanel.add( new PropertiesPanel( primitive ), BorderLayout.CENTER );
     propertiesPanel.updateUI();
   }
+  
+  public void writeToStream(OutputStream os) {
+    try {
+      DataOutputStream dos = new DataOutputStream(os);
+      /** Header **/
+      dos.writeChars( "TCSG" );
+      /** Info **/
+      dos.writeChar( 0x00 );
+      dos.writeUTF( author );
+      dos.writeLong( System.currentTimeMillis() );
+      /** Colors **/
+      dos.writeByte( 0x01 );
+      NamedColor[] colors = getNamedColors();
+      dos.writeChar( colors.length );
+      for(int c=0;c<colors.length;c++) {
+        dos.writeInt( colors[c].getRGB() );
+        dos.writeUTF( colors[c].getName() );
+      }
+      dos.flush();
+      /** Fragments **/
+      dos.writeByte( 0x02 );
+      int fragmentCount = jTabbedPane1.getTabCount();
+      dos.writeChar( fragmentCount );
+      for(int c=0;c<fragmentCount;c++){
+        String name = jTabbedPane1.getTitleAt( c );
+        EditorPanel t_ePanel = ( ( EditorPanel ) ( ( JScrollPane ) jTabbedPane1.getComponentAt( c ) ).getViewport().getView() );
+        dos.write( t_ePanel.getFigure().serialize( name ) );
+      }
+      dos.flush();
+    } catch ( IOException ex ) {
+      Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
+    }
+  }
 
   /** This method is called from within the constructor to
    * initialize the form.
@@ -338,6 +379,11 @@ public class MainFrame extends javax.swing.JFrame {
     jButton6.setFocusable(false);
     jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
     jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    jButton6.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton6ActionPerformed(evt);
+      }
+    });
     jToolBar1.add(jButton6);
     jToolBar1.add(jSeparator1);
 
@@ -625,6 +671,17 @@ public class MainFrame extends javax.swing.JFrame {
               templateSize.width, templateSize.height ) ).setVisible( true );
     }
   }//GEN-LAST:event_jButton9ActionPerformed
+
+  private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    try {
+      java.io.FileOutputStream fos = new java.io.FileOutputStream( "/home/solkin/fragments.cut" );
+      writeToStream( fos );
+      fos.close();
+    } catch ( IOException ex ) {
+      Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
+    }
+  }//GEN-LAST:event_jButton6ActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton10;

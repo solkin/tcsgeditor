@@ -1,6 +1,6 @@
 package tcsgeditor;
 
-import com.tomclaw.tcsg.Figure;
+import com.tomclaw.tcsg.Fragment;
 import com.tomclaw.tcsg.Gabarite;
 import com.tomclaw.tcsg.Primitive;
 import com.tomclaw.tcsg.ScaleGraphics;
@@ -8,13 +8,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-/**
+/**c 
  *
  * @author solkin
  */
 public class EditorPanel extends javax.swing.JPanel {
 
-  private Figure figure;
+  private Fragment figure;
   private Color dark = Color.darkGray;
   private Color light = Color.gray;
   private int startX, startY;
@@ -26,7 +26,7 @@ public class EditorPanel extends javax.swing.JPanel {
   public EditorPanel( int templateWidth, int templateHeight ) {
     initComponents();
 
-    figure = new Figure( templateWidth, templateHeight, 0, 0,
+    figure = new Fragment( templateWidth, templateHeight, 0, 0,
             templateWidth * ScaleGraphics.scaleFactor,
             templateHeight * ScaleGraphics.scaleFactor );
     Primitive[] items1 = new Primitive[ 0 ];
@@ -199,7 +199,7 @@ public class EditorPanel extends javax.swing.JPanel {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   // End of variables declaration//GEN-END:variables
 
-  public Figure getFigure() {
+  public Fragment getFigure() {
     return figure;
   }
 

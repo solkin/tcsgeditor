@@ -1,6 +1,6 @@
 package tcsgeditor;
 
-import com.tomclaw.tcsg.Figure;
+import com.tomclaw.tcsg.Fragment;
 import com.tomclaw.tcsg.ScaleGraphics;
 import java.awt.BorderLayout;
 import java.util.logging.Level;
@@ -16,12 +16,12 @@ public class PreviewDialog extends javax.swing.JDialog {
   private int scaleFactor;
 
   /** Creates new form PreviewDialog */
-  public PreviewDialog( java.awt.Frame parent, boolean modal, Figure figure ) {
+  public PreviewDialog( java.awt.Frame parent, boolean modal, Fragment figure ) {
     super( parent, modal );
     initComponents();
     scaleFactor = ScaleGraphics.scaleFactor;
     ScaleGraphics.scaleFactor = 1;
-    previewPanel = new PreviewPanel( new Figure(figure) );
+    previewPanel = new PreviewPanel( new Fragment(figure) );
     jPanel1.add( previewPanel, BorderLayout.CENTER );
     setLocationRelativeTo( parent );
   }

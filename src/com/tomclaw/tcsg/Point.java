@@ -1,7 +1,9 @@
 package com.tomclaw.tcsg;
 
+import com.tomclaw.utils.ArrayOutputStream;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.ByteArrayOutputStream;
 
 /**
  *
@@ -12,9 +14,9 @@ public class Point extends Primitive {
   private int x, y;
   private int color;
   private boolean isProportional;
-  private Figure figure;
+  private Fragment figure;
 
-  public Point( int x, int y, int color, boolean isProportional, Figure figure ) {
+  public Point( int x, int y, int color, boolean isProportional, Fragment figure ) {
     this.x = x;
     this.y = y;
     this.color = color;
@@ -40,7 +42,7 @@ public class Point extends Primitive {
   }
 
   @Override
-  public void setFigure( Figure figure ) {
+  public void setFigure( Fragment figure ) {
     this.figure = figure;
   }
 
@@ -71,5 +73,25 @@ public class Point extends Primitive {
     y = (Integer)fields[1][1];
     color = ((Color)fields[2][1]).getRGB();
     isProportional = (Boolean)fields[3][1];
+  }
+
+  @Override
+  public int getType() {
+    return Primitive.TYPE_POINT;
+  }
+
+  @Override
+  public byte[] serialize() {
+    ArrayOutputStream aos = new ArrayOutputStream(9);
+    aos.writeWord( x );
+    aos.writeWord( y );
+    aos.writeDWord( color );
+    aos.writeBool( isProportional );
+    return aos.getData();
+  }
+
+  @Override
+  public void deserialize( byte[] data ) {
+    throw new UnsupportedOperationException( "Not supported yet." );
   }
 }

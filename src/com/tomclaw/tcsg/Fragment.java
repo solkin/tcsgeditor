@@ -1,18 +1,24 @@
 package com.tomclaw.tcsg;
 
+import com.tomclaw.utils.ArrayOutputStream;
 import java.awt.Graphics;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Solkin
  */
-public class Figure {
+public class Fragment {
 
   private Primitive[] items;
   private int templateWidth, templateHeight;
   private int drawX, drawY, drawWidth, drawHeight;
 
-  public Figure( int templateWidth, int templateHeight,
+  public Fragment( int templateWidth, int templateHeight,
           int drawX, int drawY, int drawWidth, int drawHeight ) {
     this.templateWidth = templateWidth;
     this.templateHeight = templateHeight;
@@ -21,21 +27,17 @@ public class Figure {
     this.drawWidth = drawWidth;
     this.drawHeight = drawHeight;
   }
-  
-  public Figure(Figure figure) {
+
+  public Fragment( Fragment figure ) {
     /** Clonning figure **/
-    this.templateWidth = figure.templateWidth;
-    this.templateHeight = figure.templateHeight;
-    this.drawX = figure.drawX;
-    this.drawY = figure.drawY;
-    this.drawWidth = figure.drawWidth;
-    this.drawHeight = figure.drawHeight;
+    this( figure.templateWidth, figure.templateHeight, figure.drawX,
+            figure.drawY, figure.drawWidth, figure.drawHeight );
     /** Cycling all items **/
-    items = new Primitive[figure.items.length];
+    items = new Primitive[ figure.items.length ];
     for ( int c = 0; c < figure.items.length; c++ ) {
       /** Clonning primitive **/
-      Primitive primitive = (Primitive)figure.items[c].clone();
-      primitive.setFigure( Figure.this );
+      Primitive primitive = ( Primitive ) figure.items[c].clone();
+      primitive.setFigure( Fragment.this );
       items[c] = primitive;
     }
   }
@@ -158,9 +160,9 @@ public class Figure {
     if ( size >= 0 && size < templateSize ) {
       return size * ScaleGraphics.scaleFactor;
     } else if ( size == templateSize ) {
-      return drawSize - ( point + 1) * ScaleGraphics.scaleFactor;
+      return drawSize - ( point + 1 ) * ScaleGraphics.scaleFactor;
     } else {
-      return drawSize - ( point - size + 1) * ScaleGraphics.scaleFactor;
+      return drawSize - ( point - size + 1 ) * ScaleGraphics.scaleFactor;
     }
   }
 
@@ -178,5 +180,28 @@ public class Figure {
 
   public int getTemplateHeight() {
     return templateHeight;
+  }
+  
+  public byte[] serialize(String name) {
+    try {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      DataOutputStream dos = new DataOutputStream(baos);
+      dos.writeUTF( name );
+      dos.writeChar( templateWidth );
+      dos.writeChar( templateHeight );
+      dos.writeChar( items.length );
+      /** Cycling all items **/
+      for ( int c = 0; c < items.length; c++ ) {
+        byte[] data = items[c].serialize();
+        dos.writeChar( items[c].getType() );
+        dos.writeChar( data.length );
+        dos.write( data );
+      }
+      dos.flush();
+      return baos.toByteArray();
+    } catch ( IOException ex ) {
+      Logger.getLogger( Fragment.class.getName() ).log( Level.SEVERE, null, ex );
+    }
+    return null;
   }
 }

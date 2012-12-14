@@ -1,5 +1,6 @@
 package com.tomclaw.tcsg;
 
+import com.tomclaw.utils.ArrayOutputStream;
 import java.awt.Color;
 import java.awt.Graphics;
 import tcsgeditor.Selector;
@@ -17,14 +18,14 @@ public class Gradient extends Primitive {
   private int x, y, width, height;
   private int colorFrom, colorFinl;
   private boolean isProportional;
-  private Figure figure;
+  private Fragment figure;
   private boolean isFill;
   private boolean isVertical;
   private int t_x, t_y, t_w, t_h;
 
   public Gradient( int x, int y, int width, int height, int colorFrom,
           int colorFinl, boolean isFill, boolean isVertical,
-          boolean isProportional, Figure figure ) {
+          boolean isProportional, Fragment figure ) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -73,7 +74,7 @@ public class Gradient extends Primitive {
   }
 
   @Override
-  public void setFigure( Figure figure ) {
+  public void setFigure( Fragment figure ) {
     this.figure = figure;
   }
 
@@ -116,5 +117,29 @@ public class Gradient extends Primitive {
     isFill = ( Boolean ) fields[7][1];
     isVertical = ( ( Selector ) fields[8][1] ).getSelectedIndex() == 0
             ? true : false;
+  }
+  
+  @Override
+  public int getType() {
+    return Primitive.TYPE_GRADIENT;
+  }
+
+  @Override
+  public byte[] serialize() {
+    ArrayOutputStream aos = new ArrayOutputStream(18);
+    aos.writeWord( x );
+    aos.writeWord( y );
+    aos.writeWord( width );
+    aos.writeWord( height );
+    aos.writeDWord( colorFrom );
+    aos.writeDWord( colorFinl );
+    aos.writeBool( isProportional );
+    aos.writeBool( isFill );
+    return aos.getData();
+  }
+
+  @Override
+  public void deserialize( byte[] data ) {
+    throw new UnsupportedOperationException( "Not supported yet." );
   }
 }

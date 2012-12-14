@@ -1,6 +1,6 @@
 package tcsgeditor;
 
-import com.tomclaw.tcsg.Figure;
+import com.tomclaw.tcsg.Fragment;
 import com.tomclaw.tcsg.Gradient;
 import com.tomclaw.tcsg.Line;
 import com.tomclaw.tcsg.Primitive;
@@ -16,7 +16,7 @@ import java.awt.Graphics;
  */
 public class PreviewPanel extends javax.swing.JPanel {
 
-  private Figure figure;
+  private Fragment figure;
   private Color dark = Color.gray;
   private Color light = Color.lightGray;
   /**
@@ -43,13 +43,13 @@ public class PreviewPanel extends javax.swing.JPanel {
   public static int prsdGradFinl = 0xDEDBF7;
 
   /** Creates new form PreviewPanel */
-  public PreviewPanel( Figure figure ) {
+  public PreviewPanel( Fragment figure ) {
     //this.figure = figure;
     initComponents();
     
     //setPreferredSize( new Dimension( 10, 10 ) );
     this.figure = figure;
-    /*figure = new Figure( 5, 5, 0, 0, 240, 50 );
+    /*figure = new Fragment( 5, 5, 0, 0, 240, 50 );
     this.figure = figure;
     Primitive[] items1 = new Primitive[ 5 ];
 

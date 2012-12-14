@@ -1,0 +1,29 @@
+[byte] * 4 = "TCSG"
+[word] = version
+[word][string] - author
+[byte] = block type 
+	1 - colors
+	2 - figure
+[dword] - block size
+Для 1 - colors
+[word] - colors count
+{
+	[dword] - color
+	[word][string] - name
+	...
+}
+Для 2 - fragments
+[word] - fragments count
+{
+	[word][string] - name
+	[word] - template width
+	[word] - template height
+	[word] - primitives count
+	{
+		[word] - primitive type
+		[word] - primitive block size
+		[byte] * block size - primitive data
+		...
+	}
+	...
+}

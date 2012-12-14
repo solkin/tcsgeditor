@@ -1,5 +1,6 @@
 package com.tomclaw.tcsg;
 
+import com.tomclaw.utils.ArrayOutputStream;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -12,11 +13,11 @@ public class Rect extends Primitive {
   private int x, y, width, height;
   private int color;
   private boolean isProportional;
-  private Figure figure;
+  private Fragment figure;
   private boolean isFill;
   private int t_x, t_y, t_w, t_h;
 
-  public Rect( int x, int y, int width, int height, int color, boolean isFill, boolean isProportional, Figure figure ) {
+  public Rect( int x, int y, int width, int height, int color, boolean isFill, boolean isProportional, Fragment figure ) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -54,7 +55,7 @@ public class Rect extends Primitive {
   }
 
   @Override
-  public void setFigure( Figure figure ) {
+  public void setFigure( Fragment figure ) {
     this.figure = figure;
   }
 
@@ -91,5 +92,28 @@ public class Rect extends Primitive {
     color = ((Color)fields[4][1]).getRGB();
     isProportional = (Boolean)fields[5][1];
     isFill = (Boolean)fields[6][1];
+  }
+  
+  @Override
+  public int getType() {
+    return Primitive.TYPE_RECT;
+  }
+
+  @Override
+  public byte[] serialize() {
+    ArrayOutputStream aos = new ArrayOutputStream(14);
+    aos.writeWord( x );
+    aos.writeWord( y );
+    aos.writeWord( width );
+    aos.writeWord( height );
+    aos.writeDWord( color );
+    aos.writeBool( isProportional );
+    aos.writeBool( isFill );
+    return aos.getData();
+  }
+
+  @Override
+  public void deserialize( byte[] data ) {
+    throw new UnsupportedOperationException( "Not supported yet." );
   }
 }

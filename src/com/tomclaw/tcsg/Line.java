@@ -1,5 +1,6 @@
 package com.tomclaw.tcsg;
 
+import com.tomclaw.utils.ArrayOutputStream;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -12,9 +13,9 @@ public class Line extends Primitive {
   public int x1, y1, x2, y2;
   private int color;
   private boolean isProportional;
-  private Figure figure;
+  private Fragment figure;
 
-  public Line( int x1, int y1, int x2, int y2, int color, boolean isProportional, Figure figure ) {
+  public Line( int x1, int y1, int x2, int y2, int color, boolean isProportional, Fragment figure ) {
     this.x1 = x1;
     this.y1 = y1;
     this.x2 = x2;
@@ -47,7 +48,7 @@ public class Line extends Primitive {
   }
 
   @Override
-  public void setFigure( Figure figure ) {
+  public void setFigure( Fragment figure ) {
     this.figure = figure;
   }
 
@@ -82,5 +83,27 @@ public class Line extends Primitive {
     y2 = (Integer)fields[3][1];
     color = ((Color)fields[4][1]).getRGB();
     isProportional = (Boolean)fields[5][1];
+  }
+  
+  @Override
+  public int getType() {
+    return Primitive.TYPE_LINE;
+  }
+
+  @Override
+  public byte[] serialize() {
+    ArrayOutputStream aos = new ArrayOutputStream(13);
+    aos.writeWord( x1 );
+    aos.writeWord( y1 );
+    aos.writeWord( x2 );
+    aos.writeWord( y2 );
+    aos.writeDWord( color );
+    aos.writeBool( isProportional );
+    return aos.getData();
+  }
+
+  @Override
+  public void deserialize( byte[] data ) {
+    throw new UnsupportedOperationException( "Not supported yet." );
   }
 }
