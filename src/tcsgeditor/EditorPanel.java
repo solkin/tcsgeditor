@@ -81,8 +81,12 @@ public class EditorPanel extends javax.swing.JPanel {
     figure.setDrawSize( width * ScaleGraphics.scaleFactor, height * ScaleGraphics.scaleFactor );
     updateDrawSize();
   }
+  
+  public Dimension getTemplateSize() {
+    return new Dimension(figure.getTemplateWidth(), figure.getTemplateHeight());
+  }
 
-  public void updateDrawSize() {
+  public final void updateDrawSize() {
     figure.setDrawSize( figure.getTemplateWidth() * ScaleGraphics.scaleFactor,
             figure.getTemplateHeight() * ScaleGraphics.scaleFactor );
     setPreferredSize( new Dimension( figure.getDrawWidth(), figure.getDrawHeight() ) );

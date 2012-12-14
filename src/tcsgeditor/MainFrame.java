@@ -8,6 +8,7 @@ import com.tomclaw.tcsg.Rect;
 import com.tomclaw.tcsg.ScaleGraphics;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,10 +26,13 @@ public class MainFrame extends javax.swing.JFrame {
     initComponents();
     initToolPanel();
     setLocationRelativeTo( null );
-
+    /** Sample figure **/
     createFigure( "figure1", 32, 32 );
   }
 
+  /**
+   * Initializing toolbox
+   */
   private void initToolPanel() {
     toolPanel.setLayout( new VerticalFlowLayout() );
     toolPanel.add( new ToolButton( "/res/icon-cursor.png", "Указатель" ) {
@@ -99,6 +103,12 @@ public class MainFrame extends javax.swing.JFrame {
     } );
   }
 
+  /**
+   * Creates new figure and new tab
+   * @param title
+   * @param templateWidth
+   * @param templateHeight 
+   */
   public final void createFigure( String title, int templateWidth, int templateHeight ) {
     javax.swing.JScrollPane jScrollPane = new javax.swing.JScrollPane();
     jTabbedPane1.addTab( title, jScrollPane );
@@ -106,14 +116,43 @@ public class MainFrame extends javax.swing.JFrame {
     jScrollPane.setViewportView( ePanel );
   }
 
+  /**
+   * Updates figure for specified params
+   * @param index
+   * @param title
+   * @param templateWidth
+   * @param templateHeight 
+   */
+  public final void updateFigure( int index, String title, int templateWidth, int templateHeight ) {
+    EditorPanel editorPanel = getActiveEditorPanel();
+    if ( editorPanel != null && index >= 0
+            && index < jTabbedPane1.getTabCount() ) {
+      jTabbedPane1.setTitleAt( index, title );
+      editorPanel.setTemplateSize( templateWidth, templateHeight );
+      updateScaleFactor( ScaleGraphics.scaleFactor );
+    }
+  }
+
+  /**
+   * Setting up primitive as selected one
+   * @param activePrimitive 
+   */
   public void setActivePrimitive( Primitive activePrimitive ) {
     this.activePrimitive = activePrimitive;
   }
 
+  /**
+   * Returns selected primitive for painting
+   * @return Primitive
+   */
   public Primitive getActivePrimitive() {
     return activePrimitive;
   }
 
+  /**
+   * Returns active (selected) color
+   * @return int (RGB)
+   */
   public int getActiveColor() {
     Color[] colors = getActiveColorObjects();
     if ( colors != null ) {
@@ -122,6 +161,10 @@ public class MainFrame extends javax.swing.JFrame {
     return Color.red.getRGB();
   }
 
+  /**
+   * Returns darker or brighter colorfrom selected
+   * @return int (RGB)
+   */
   public int getNearestColor() {
     Color[] colors = getActiveColorObjects();
     Color color;
@@ -141,6 +184,10 @@ public class MainFrame extends javax.swing.JFrame {
     }
   }
 
+  /**
+   * Returns selected colors
+   * @return Color[]
+   */
   private Color[] getActiveColorObjects() {
     DefaultTableModel model = ( ( DefaultTableModel ) jTable1.getModel() );
     int[] selectedRows = jTable1.getSelectedRows();
@@ -154,16 +201,25 @@ public class MainFrame extends javax.swing.JFrame {
     return null;
   }
 
+  /**
+   * Returns all colors
+   * @return NamedColor[]
+   */
   public NamedColor[] getNamedColors() {
     DefaultTableModel model = ( ( DefaultTableModel ) jTable1.getModel() );
     NamedColor[] namedColors = new NamedColor[ model.getRowCount() ];
     for ( int c = 0; c < namedColors.length; c++ ) {
-      namedColors[c] = new NamedColor( (( Color ) model.getValueAt( c, 0 )).getRGB(), 
-              ( String ) model.getValueAt( c, 1 ));
+      namedColors[c] = new NamedColor( ( ( Color ) model.getValueAt( c, 0 ) ).getRGB(),
+              ( String ) model.getValueAt( c, 1 ) );
     }
     return namedColors;
   }
 
+  /**
+   * Updatesor creates specified color
+   * @param color
+   * @param name 
+   */
   public void setColor( Color color, String name ) {
     DefaultTableModel model = ( ( DefaultTableModel ) jTable1.getModel() );
     for ( int c = 0; c < model.getRowCount(); c++ ) {
@@ -176,22 +232,42 @@ public class MainFrame extends javax.swing.JFrame {
     model.addRow( new Object[] { color, name } );
   }
 
+  /**
+   * Returns active editor panel or null in case of editor panels doesnt exist
+   * @return EditorPanel
+   */
   public EditorPanel getActiveEditorPanel() {
+    /** Checking for at least one tab exist **/
     if ( jTabbedPane1.getTabCount() > 0 ) {
       return ( ( EditorPanel ) ( ( JScrollPane ) jTabbedPane1.getSelectedComponent() ).getViewport().getView() );
     }
     return null;
   }
 
+  /**
+   * Updates global scale factor and perform full UI update
+   * @param scaleFactor 
+   */
   public void updateScaleFactor( int scaleFactor ) {
+    /** Obtain editor panel **/
     EditorPanel editorPanel = getActiveEditorPanel();
     if ( editorPanel != null ) {
+      /** Setting scale factor up **/
       ScaleGraphics.scaleFactor = scaleFactor;
       editorPanel.updateDrawSize();
+      /** Updating tabbed pane **/
       jTabbedPane1.updateUI();
+      /** Updating scrolls **/
+      JScrollPane scrollPane = ( JScrollPane ) jTabbedPane1.getSelectedComponent();
+      scrollPane.updateUI();
     }
   }
 
+  /**
+   * Setting specified primitive as selected 
+   * and opening properties panel for this primitive
+   * @param primitive 
+   */
   public void setSelectedPrimitive( Primitive primitive ) {
     propertiesPanel.removeAll();
     propertiesPanel.add( new PropertiesPanel( primitive ), BorderLayout.CENTER );
@@ -281,12 +357,22 @@ public class MainFrame extends javax.swing.JFrame {
     jButton8.setFocusable(false);
     jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
     jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    jButton8.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton8ActionPerformed(evt);
+      }
+    });
     jToolBar1.add(jButton8);
 
     jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-edit-figure.png"))); // NOI18N
     jButton9.setFocusable(false);
     jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
     jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    jButton9.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton9ActionPerformed(evt);
+      }
+    });
     jToolBar1.add(jButton9);
     jToolBar1.add(jSeparator2);
 
@@ -494,7 +580,7 @@ public class MainFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_jButton5ActionPerformed
 
   private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-    ( new CreateFigureDialog( this, true ) ).setVisible( true );
+    ( new EditFigureDialog( this, true ) ).setVisible( true );
   }//GEN-LAST:event_jButton7ActionPerformed
 
   private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -519,6 +605,26 @@ public class MainFrame extends javax.swing.JFrame {
     new PreviewDialog( this, true, getActiveEditorPanel().getFigure() )
             .setVisible( true );
   }//GEN-LAST:event_jButton13ActionPerformed
+
+  private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    int selectedIndex = jTabbedPane1.getSelectedIndex();
+    if ( selectedIndex >= 0 && selectedIndex < jTabbedPane1.getTabCount() ) {
+      jTabbedPane1.remove( selectedIndex );
+      jTabbedPane1.updateUI();
+    }
+  }//GEN-LAST:event_jButton8ActionPerformed
+
+  private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    int selectedIndex = jTabbedPane1.getSelectedIndex();
+    EditorPanel editorPanel = getActiveEditorPanel();
+    if ( editorPanel != null && selectedIndex >= 0
+            && selectedIndex < jTabbedPane1.getTabCount() ) {
+      String figureName = jTabbedPane1.getTitleAt( selectedIndex );
+      Dimension templateSize = editorPanel.getTemplateSize();
+      ( new EditFigureDialog( this, true, selectedIndex, figureName,
+              templateSize.width, templateSize.height ) ).setVisible( true );
+    }
+  }//GEN-LAST:event_jButton9ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton10;

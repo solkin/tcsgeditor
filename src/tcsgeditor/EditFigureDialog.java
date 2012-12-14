@@ -1,16 +1,38 @@
 package tcsgeditor;
 
+import com.tomclaw.tcsg.ScaleGraphics;
+
 /**
  *
  * @author solkin
  */
-public class CreateFigureDialog extends javax.swing.JDialog {
+public class EditFigureDialog extends javax.swing.JDialog {
 
-  /** Creates new form CreateFigureDialog */
-  public CreateFigureDialog( java.awt.Frame parent, boolean modal ) {
+  private int index;
+  private String figureName;
+  private int templateWidth;
+  private int templateHeight;
+
+  /** Creates new form EditFigureDialog */
+  public EditFigureDialog( java.awt.Frame parent, boolean modal ) {
+    this( parent, modal, -1, "figure", 16, 16 );
+  }
+
+  /** Creates new form EditFigureDialog */
+  public EditFigureDialog( java.awt.Frame parent, boolean modal, int index, 
+          String figureName, int templateWidth, int templateHeight) {
     super( parent, modal );
+    this.index = index;
+    this.figureName = figureName;
+    this.templateWidth = templateWidth;
+    this.templateHeight = templateHeight;
     initComponents();
     setLocationRelativeTo( parent );
+    if ( index >= 0 ) {
+      setTitle( "Изменение фигуры" );
+    } else {
+      setTitle( "Создание фигуры" );
+    }
   }
 
   /** This method is called from within the constructor to
@@ -37,19 +59,22 @@ public class CreateFigureDialog extends javax.swing.JDialog {
 
     jLabel1.setText("Название новой фигуры:");
 
-    jTextField1.setText("figure");
+    jTextField1.setText(figureName);
+    jTextField1.setOpaque(false);
 
     jLabel2.setText("Размер шаблона:");
 
     jLabel3.setText("Ширина:");
 
-    jSpinner1.setModel(new javax.swing.SpinnerNumberModel(16, 2, 1000, 1));
+    jSpinner1.setModel(new javax.swing.SpinnerNumberModel(templateWidth, 2, 1000, 1));
+    jSpinner1.setOpaque(false);
 
     jLabel4.setText("Высота:");
 
-    jSpinner2.setModel(new javax.swing.SpinnerNumberModel(16, 2, 1000, 1));
+    jSpinner2.setModel(new javax.swing.SpinnerNumberModel(templateHeight, 2, 1000, 1));
+    jSpinner2.setOpaque(false);
 
-    jButton1.setText("Создать");
+    jButton1.setText(index >= 0 ? "Изменить" : "Создать");
     jButton1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton1ActionPerformed(evt);
@@ -131,10 +156,14 @@ public class CreateFigureDialog extends javax.swing.JDialog {
   }//GEN-LAST:event_jButton2ActionPerformed
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String figureName = jTextField1.getText();
-    int templateWidth = ( ( Integer ) jSpinner1.getValue() ).intValue();
-    int templateHeight = ( ( Integer ) jSpinner2.getValue() ).intValue();
-    TCSGEditor.mainFrame.createFigure( figureName, templateWidth, templateHeight );
+    figureName = jTextField1.getText();
+    templateWidth = ( ( Integer ) jSpinner1.getValue() ).intValue();
+    templateHeight = ( ( Integer ) jSpinner2.getValue() ).intValue();
+    if ( index >= 0 ) {
+      TCSGEditor.mainFrame.updateFigure( index, figureName, templateWidth, templateHeight );
+    } else {
+      TCSGEditor.mainFrame.createFigure( figureName, templateWidth, templateHeight );
+    }
     dispose();
   }//GEN-LAST:event_jButton1ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
