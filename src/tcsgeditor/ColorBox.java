@@ -9,6 +9,6 @@ import javax.swing.JComboBox;
 public class ColorBox extends JComboBox {
 
   public ColorBox() {
-    super(TCSGEditor.mainFrame.getNamedColors());
+    super( TCSGEditor.mainFrame.getNamedColors() );
   }
 }

@@ -1,8 +1,10 @@
 package com.tomclaw.tcsg;
 
-import com.tomclaw.utils.ArrayOutputStream;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  *
@@ -13,31 +15,31 @@ public class Line extends Primitive {
   public int x1, y1, x2, y2;
   private int color;
   private boolean isProportional;
-  private Fragment figure;
+  private Fragment fragment;
 
-  public Line( int x1, int y1, int x2, int y2, int color, boolean isProportional, Fragment figure ) {
+  public Line( int x1, int y1, int x2, int y2, int color, boolean isProportional, Fragment fragment ) {
     this.x1 = x1;
     this.y1 = y1;
     this.x2 = x2;
     this.y2 = y2;
     this.color = color;
     this.isProportional = isProportional;
-    this.figure = figure;
+    this.fragment = fragment;
   }
 
   @Override
   public void paint( Graphics g ) {
     ScaleGraphics.setColor( g, color );
     if ( isProportional ) {
-      ScaleGraphics.drawLine( g, figure.getPropX( x1 ),
-              figure.getPropY( y1 ),
-              figure.getSecPropX( x1, x2 ),
-              figure.getSecPropY( y1, y2 ) );
+      ScaleGraphics.drawLine( g, fragment.getPropX( x1 ),
+              fragment.getPropY( y1 ),
+              fragment.getSecPropX( x1, x2 ),
+              fragment.getSecPropY( y1, y2 ) );
     } else {
-      ScaleGraphics.drawLine( g, figure.getAbsX( x1 ),
-              figure.getAbsY( y1 ),
-              figure.getSecAbsX( x2 ),
-              figure.getSecAbsY( y2 ) );
+      ScaleGraphics.drawLine( g, fragment.getAbsX( x1 ),
+              fragment.getAbsY( y1 ),
+              fragment.getSecAbsX( x2 ),
+              fragment.getSecAbsY( y2 ) );
     }
   }
 
@@ -48,8 +50,8 @@ public class Line extends Primitive {
   }
 
   @Override
-  public void setFigure( Fragment figure ) {
-    this.figure = figure;
+  public void setFigure( Fragment fragment ) {
+    this.fragment = fragment;
   }
 
   @Override
@@ -77,33 +79,31 @@ public class Line extends Primitive {
 
   @Override
   public void setFields( Object[][] fields ) {
-    x1 = (Integer)fields[0][1];
-    y1 = (Integer)fields[1][1];
-    x2 = (Integer)fields[2][1];
-    y2 = (Integer)fields[3][1];
-    color = ((Color)fields[4][1]).getRGB();
-    isProportional = (Boolean)fields[5][1];
+    x1 = ( Integer ) fields[0][1];
+    y1 = ( Integer ) fields[1][1];
+    x2 = ( Integer ) fields[2][1];
+    y2 = ( Integer ) fields[3][1];
+    color = ( ( Color ) fields[4][1] ).getRGB();
+    isProportional = ( Boolean ) fields[5][1];
   }
-  
+
   @Override
   public int getType() {
     return Primitive.TYPE_LINE;
   }
 
   @Override
-  public byte[] serialize() {
-    ArrayOutputStream aos = new ArrayOutputStream(13);
-    aos.writeWord( x1 );
-    aos.writeWord( y1 );
-    aos.writeWord( x2 );
-    aos.writeWord( y2 );
-    aos.writeDWord( color );
-    aos.writeBool( isProportional );
-    return aos.getData();
+  public void write( DataOutputStream dos ) throws IOException {
+    dos.writeChar( x1 );
+    dos.writeChar( y1 );
+    dos.writeChar( x2 );
+    dos.writeChar( y2 );
+    dos.writeInt( color );
+    dos.writeBoolean( isProportional );
   }
 
   @Override
-  public void deserialize( byte[] data ) {
+  public void read( DataInputStream dis ) {
     throw new UnsupportedOperationException( "Not supported yet." );
   }
 }

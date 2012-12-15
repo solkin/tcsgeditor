@@ -1,13 +1,7 @@
 package tcsgeditor;
 
 import com.tomclaw.tcsg.Fragment;
-import com.tomclaw.tcsg.Gradient;
-import com.tomclaw.tcsg.Line;
-import com.tomclaw.tcsg.Primitive;
-import com.tomclaw.tcsg.Rect;
-import com.tomclaw.tcsg.ScaleGraphics;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 
 /**
@@ -16,7 +10,7 @@ import java.awt.Graphics;
  */
 public class PreviewPanel extends javax.swing.JPanel {
 
-  private Fragment figure;
+  private Fragment fragment;
   private Color dark = Color.gray;
   private Color light = Color.lightGray;
   /**
@@ -43,23 +37,23 @@ public class PreviewPanel extends javax.swing.JPanel {
   public static int prsdGradFinl = 0xDEDBF7;
 
   /** Creates new form PreviewPanel */
-  public PreviewPanel( Fragment figure ) {
-    //this.figure = figure;
+  public PreviewPanel( Fragment fragment ) {
+    //this.fragment = fragment;
     initComponents();
     
     //setPreferredSize( new Dimension( 10, 10 ) );
-    this.figure = figure;
-    /*figure = new Fragment( 5, 5, 0, 0, 240, 50 );
-    this.figure = figure;
+    this.fragment = fragment;
+    /*fragment = new Fragment( 5, 5, 0, 0, 240, 50 );
+    this.fragment = fragment;
     Primitive[] items1 = new Primitive[ 5 ];
 
-    items1[0] = new Gradient( 0, 0, 4, 2, actGradFrom, actGradMidd, true, true, true, figure );
-    items1[1] = new Gradient( 0, 3, 4, 1, actGradAftr, actGradFinl, true, true, true, figure );
-    items1[2] = new Rect( 0, 0, 5, 5, actBotBorder, false, false, figure );
-    items1[3] = new Line( 0, 0, -1, 0, actOnlTopBorder, false, figure );
-    items1[4] = new Line( 1, -1, -1, -1, actInOnlBotBorder, false, figure );
+    items1[0] = new Gradient( 0, 0, 4, 2, actGradFrom, actGradMidd, true, true, true, fragment );
+    items1[1] = new Gradient( 0, 3, 4, 1, actGradAftr, actGradFinl, true, true, true, fragment );
+    items1[2] = new Rect( 0, 0, 5, 5, actBotBorder, false, false, fragment );
+    items1[3] = new Line( 0, 0, -1, 0, actOnlTopBorder, false, fragment );
+    items1[4] = new Line( 1, -1, -1, -1, actInOnlBotBorder, false, fragment );
 
-    figure.setPrimitives( items1 );*/
+    fragment.setPrimitives( items1 );*/
 
     updateDrawSize();
   }
@@ -70,17 +64,17 @@ public class PreviewPanel extends javax.swing.JPanel {
     g.setColor( Color.white );
     g.fillRect( 0, 0, getWidth(), getHeight() );
     /** Locating **/
-    figure.setDrawLocation( 0, 0 );
+    fragment.setDrawLocation( 0, 0 );
     /** Fixing time **/
     long time = System.currentTimeMillis();
     /** Painting **/
-    figure.paint( g );
+    fragment.paint( g );
     /** Showing time elapsed **/
     System.out.println( "Time: " + ( System.currentTimeMillis() - time ) );
   }
 
   public final void updateDrawSize() {
-    figure.setDrawSize( getWidth(), getHeight() );
+    fragment.setDrawSize( getWidth(), getHeight() );
   }
 
   /** This method is called from within the constructor to

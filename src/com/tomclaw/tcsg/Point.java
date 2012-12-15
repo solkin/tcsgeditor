@@ -1,9 +1,10 @@
 package com.tomclaw.tcsg;
 
-import com.tomclaw.utils.ArrayOutputStream;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  *
@@ -14,24 +15,24 @@ public class Point extends Primitive {
   private int x, y;
   private int color;
   private boolean isProportional;
-  private Fragment figure;
+  private Fragment fragment;
 
-  public Point( int x, int y, int color, boolean isProportional, Fragment figure ) {
+  public Point( int x, int y, int color, boolean isProportional, Fragment fragment ) {
     this.x = x;
     this.y = y;
     this.color = color;
     this.isProportional = isProportional;
-    this.figure = figure;
+    this.fragment = fragment;
   }
 
   public void paint( Graphics g ) {
     ScaleGraphics.setColor( g, color );
     if ( isProportional ) {
-      ScaleGraphics.drawPoint( g, figure.getPropX( x ),
-              figure.getPropY( y ) );
+      ScaleGraphics.drawPoint( g, fragment.getPropX( x ),
+              fragment.getPropY( y ) );
     } else {
-      ScaleGraphics.drawPoint( g, figure.getAbsX( x ),
-              figure.getAbsY( y ) );
+      ScaleGraphics.drawPoint( g, fragment.getAbsX( x ),
+              fragment.getAbsY( y ) );
     }
   }
 
@@ -42,8 +43,8 @@ public class Point extends Primitive {
   }
 
   @Override
-  public void setFigure( Fragment figure ) {
-    this.figure = figure;
+  public void setFigure( Fragment fragment ) {
+    this.fragment = fragment;
   }
 
   @Override
@@ -57,7 +58,7 @@ public class Point extends Primitive {
     return new Gabarite( x, y, x + ScaleGraphics.scaleFactor, y + ScaleGraphics.scaleFactor );
   }
 
-@Override
+  @Override
   public Object[][] getFields() {
     return new Object[][] {
               { "Положение X", Integer.valueOf( x ) },
@@ -69,10 +70,10 @@ public class Point extends Primitive {
 
   @Override
   public void setFields( Object[][] fields ) {
-    x = (Integer)fields[0][1];
-    y = (Integer)fields[1][1];
-    color = ((Color)fields[2][1]).getRGB();
-    isProportional = (Boolean)fields[3][1];
+    x = ( Integer ) fields[0][1];
+    y = ( Integer ) fields[1][1];
+    color = ( ( Color ) fields[2][1] ).getRGB();
+    isProportional = ( Boolean ) fields[3][1];
   }
 
   @Override
@@ -81,17 +82,15 @@ public class Point extends Primitive {
   }
 
   @Override
-  public byte[] serialize() {
-    ArrayOutputStream aos = new ArrayOutputStream(9);
-    aos.writeWord( x );
-    aos.writeWord( y );
-    aos.writeDWord( color );
-    aos.writeBool( isProportional );
-    return aos.getData();
+  public void write( DataOutputStream dos ) throws IOException {
+    dos.writeChar( x );
+    dos.writeChar( y );
+    dos.writeInt( color );
+    dos.writeBoolean( isProportional );
   }
 
   @Override
-  public void deserialize( byte[] data ) {
+  public void read( DataInputStream dis ) {
     throw new UnsupportedOperationException( "Not supported yet." );
   }
 }

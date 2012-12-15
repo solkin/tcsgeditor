@@ -10,7 +10,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
@@ -26,14 +25,15 @@ public class MainFrame extends javax.swing.JFrame {
 
   public EditorPanel ePanel;
   private Primitive activePrimitive;
-  public String author;
+  public static String author;
+  public static final int version = 0x0001;
 
   /** Creates new form MainFrame */
   public MainFrame() {
     initComponents();
     initToolPanel();
     setLocationRelativeTo( null );
-    /** Sample figure **/
+    /** Sample fragment **/
     createFigure( "figure1", 32, 32 );
     author = "TomClaw Software";
   }
@@ -112,7 +112,7 @@ public class MainFrame extends javax.swing.JFrame {
   }
 
   /**
-   * Creates new figure and new tab
+   * Creates new fragment and new tab
    * @param title
    * @param templateWidth
    * @param templateHeight 
@@ -125,7 +125,7 @@ public class MainFrame extends javax.swing.JFrame {
   }
 
   /**
-   * Updates figure for specified params
+   * Updates fragment for specified params
    * @param index
    * @param title
    * @param templateWidth
@@ -281,21 +281,21 @@ public class MainFrame extends javax.swing.JFrame {
     propertiesPanel.add( new PropertiesPanel( primitive ), BorderLayout.CENTER );
     propertiesPanel.updateUI();
   }
-  
-  public void writeToStream(OutputStream os) {
+
+  public void writeToStream( OutputStream os ) {
     try {
-      DataOutputStream dos = new DataOutputStream(os);
+      DataOutputStream dos = new DataOutputStream( os );
       /** Header **/
-      dos.writeChars( "TCSG" );
+      dos.writeBytes( "TCSG" );
       /** Info **/
-      dos.writeChar( 0x00 );
+      dos.writeChar( version );
       dos.writeUTF( author );
       dos.writeLong( System.currentTimeMillis() );
       /** Colors **/
       dos.writeByte( 0x01 );
       NamedColor[] colors = getNamedColors();
       dos.writeChar( colors.length );
-      for(int c=0;c<colors.length;c++) {
+      for ( int c = 0; c < colors.length; c++ ) {
         dos.writeInt( colors[c].getRGB() );
         dos.writeUTF( colors[c].getName() );
       }
@@ -304,10 +304,11 @@ public class MainFrame extends javax.swing.JFrame {
       dos.writeByte( 0x02 );
       int fragmentCount = jTabbedPane1.getTabCount();
       dos.writeChar( fragmentCount );
-      for(int c=0;c<fragmentCount;c++){
+      for ( int c = 0; c < fragmentCount; c++ ) {
         String name = jTabbedPane1.getTitleAt( c );
         EditorPanel t_ePanel = ( ( EditorPanel ) ( ( JScrollPane ) jTabbedPane1.getComponentAt( c ) ).getViewport().getView() );
-        dos.write( t_ePanel.getFigure().serialize( name ) );
+        dos.writeUTF( name );
+        t_ePanel.getFigure().write( dos );
       }
       dos.flush();
     } catch ( IOException ex ) {
@@ -387,7 +388,7 @@ public class MainFrame extends javax.swing.JFrame {
     jToolBar1.add(jButton6);
     jToolBar1.add(jSeparator1);
 
-    jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-create-figure.png"))); // NOI18N
+    jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-create-fragment.png"))); // NOI18N
     jButton7.setToolTipText("");
     jButton7.setFocusable(false);
     jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -399,7 +400,7 @@ public class MainFrame extends javax.swing.JFrame {
     });
     jToolBar1.add(jButton7);
 
-    jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-remove-figure.png"))); // NOI18N
+    jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-remove-fragment.png"))); // NOI18N
     jButton8.setFocusable(false);
     jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
     jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -410,7 +411,7 @@ public class MainFrame extends javax.swing.JFrame {
     });
     jToolBar1.add(jButton8);
 
-    jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-edit-figure.png"))); // NOI18N
+    jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-edit-fragment.png"))); // NOI18N
     jButton9.setFocusable(false);
     jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
     jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -674,14 +675,13 @@ public class MainFrame extends javax.swing.JFrame {
 
   private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
     try {
-      java.io.FileOutputStream fos = new java.io.FileOutputStream( "/home/solkin/fragments.cut" );
-      writeToStream( fos );
-      fos.close();
+      try ( java.io.FileOutputStream fos = new java.io.FileOutputStream( "/home/solkin/fragments.cut" ) ) {
+        writeToStream( fos );
+      }
     } catch ( IOException ex ) {
       Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
     }
   }//GEN-LAST:event_jButton6ActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton10;

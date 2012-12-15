@@ -1,12 +1,8 @@
 package com.tomclaw.tcsg;
 
-import com.tomclaw.utils.ArrayOutputStream;
 import java.awt.Graphics;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -28,15 +24,15 @@ public class Fragment {
     this.drawHeight = drawHeight;
   }
 
-  public Fragment( Fragment figure ) {
-    /** Clonning figure **/
-    this( figure.templateWidth, figure.templateHeight, figure.drawX,
-            figure.drawY, figure.drawWidth, figure.drawHeight );
+  public Fragment( Fragment fragment ) {
+    /** Clonning fragment **/
+    this( fragment.templateWidth, fragment.templateHeight, fragment.drawX,
+            fragment.drawY, fragment.drawWidth, fragment.drawHeight );
     /** Cycling all items **/
-    items = new Primitive[ figure.items.length ];
-    for ( int c = 0; c < figure.items.length; c++ ) {
+    items = new Primitive[ fragment.items.length ];
+    for ( int c = 0; c < fragment.items.length; c++ ) {
       /** Clonning primitive **/
-      Primitive primitive = ( Primitive ) figure.items[c].clone();
+      Primitive primitive = ( Primitive ) fragment.items[c].clone();
       primitive.setFigure( Fragment.this );
       items[c] = primitive;
     }
@@ -181,27 +177,15 @@ public class Fragment {
   public int getTemplateHeight() {
     return templateHeight;
   }
-  
-  public byte[] serialize(String name) {
-    try {
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      DataOutputStream dos = new DataOutputStream(baos);
-      dos.writeUTF( name );
-      dos.writeChar( templateWidth );
-      dos.writeChar( templateHeight );
-      dos.writeChar( items.length );
-      /** Cycling all items **/
-      for ( int c = 0; c < items.length; c++ ) {
-        byte[] data = items[c].serialize();
-        dos.writeChar( items[c].getType() );
-        dos.writeChar( data.length );
-        dos.write( data );
-      }
-      dos.flush();
-      return baos.toByteArray();
-    } catch ( IOException ex ) {
-      Logger.getLogger( Fragment.class.getName() ).log( Level.SEVERE, null, ex );
+
+  public void write( DataOutputStream dos ) throws IOException {
+    dos.writeChar( templateWidth );
+    dos.writeChar( templateHeight );
+    dos.writeChar( items.length );
+    /** Cycling all items **/
+    for ( int c = 0; c < items.length; c++ ) {
+      dos.writeChar( items[c].getType() );
+      items[c].write( dos );
     }
-    return null;
   }
 }

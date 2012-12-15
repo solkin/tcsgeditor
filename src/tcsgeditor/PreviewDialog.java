@@ -3,8 +3,6 @@ package tcsgeditor;
 import com.tomclaw.tcsg.Fragment;
 import com.tomclaw.tcsg.ScaleGraphics;
 import java.awt.BorderLayout;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -16,12 +14,12 @@ public class PreviewDialog extends javax.swing.JDialog {
   private int scaleFactor;
 
   /** Creates new form PreviewDialog */
-  public PreviewDialog( java.awt.Frame parent, boolean modal, Fragment figure ) {
+  public PreviewDialog( java.awt.Frame parent, boolean modal, Fragment fragment ) {
     super( parent, modal );
     initComponents();
     scaleFactor = ScaleGraphics.scaleFactor;
     ScaleGraphics.scaleFactor = 1;
-    previewPanel = new PreviewPanel( new Fragment(figure) );
+    previewPanel = new PreviewPanel( new Fragment( fragment ) );
     jPanel1.add( previewPanel, BorderLayout.CENTER );
     setLocationRelativeTo( parent );
   }
@@ -95,18 +93,15 @@ public class PreviewDialog extends javax.swing.JDialog {
   }//GEN-LAST:event_jButton1ActionPerformed
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-    
   }//GEN-LAST:event_formWindowClosing
 
   private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
-    
   }//GEN-LAST:event_formWindowStateChanged
 
   private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
     ScaleGraphics.scaleFactor = scaleFactor;
-    System.out.println( "Closing");
+    System.out.println( "Closing" );
   }//GEN-LAST:event_formWindowClosed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
   private javax.swing.JPanel jPanel1;

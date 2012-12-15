@@ -3,7 +3,7 @@
 [word][string] - author
 [byte] = block type 
 	1 - colors
-	2 - figure
+	2 - fragment
 [dword] - block size
 Для 1 - colors
 [word] - colors count

@@ -1,14 +1,12 @@
 package com.tomclaw.tcsg;
 
-import com.tomclaw.utils.ArrayOutputStream;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import tcsgeditor.Selector;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author solkin
@@ -18,14 +16,14 @@ public class Gradient extends Primitive {
   private int x, y, width, height;
   private int colorFrom, colorFinl;
   private boolean isProportional;
-  private Fragment figure;
+  private Fragment fragment;
   private boolean isFill;
   private boolean isVertical;
   private int t_x, t_y, t_w, t_h;
 
   public Gradient( int x, int y, int width, int height, int colorFrom,
           int colorFinl, boolean isFill, boolean isVertical,
-          boolean isProportional, Fragment figure ) {
+          boolean isProportional, Fragment fragment ) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -35,21 +33,21 @@ public class Gradient extends Primitive {
     this.isFill = isFill;
     this.isVertical = isVertical;
     this.isProportional = isProportional;
-    this.figure = figure;
+    this.fragment = fragment;
   }
 
   @Override
   public void paint( Graphics g ) {
     if ( isProportional ) {
-      t_x = figure.getPropX( x );
-      t_y = figure.getPropY( y );
-      t_w = figure.getPropWidth( width );
-      t_h = figure.getPropHeight( height );
+      t_x = fragment.getPropX( x );
+      t_y = fragment.getPropY( y );
+      t_w = fragment.getPropWidth( width );
+      t_h = fragment.getPropHeight( height );
     } else {
-      t_x = figure.getAbsX( x );
-      t_y = figure.getAbsY( y );
-      t_w = figure.getAbsWidth( x, width );
-      t_h = figure.getAbsHeight( y, height );
+      t_x = fragment.getAbsX( x );
+      t_y = fragment.getAbsY( y );
+      t_w = fragment.getAbsWidth( x, width );
+      t_h = fragment.getAbsHeight( y, height );
     }
     if ( isFill ) {
       if ( isVertical ) {
@@ -74,8 +72,8 @@ public class Gradient extends Primitive {
   }
 
   @Override
-  public void setFigure( Fragment figure ) {
-    this.figure = figure;
+  public void setFigure( Fragment fragment ) {
+    this.fragment = fragment;
   }
 
   @Override
@@ -118,28 +116,26 @@ public class Gradient extends Primitive {
     isVertical = ( ( Selector ) fields[8][1] ).getSelectedIndex() == 0
             ? true : false;
   }
-  
+
   @Override
   public int getType() {
     return Primitive.TYPE_GRADIENT;
   }
 
   @Override
-  public byte[] serialize() {
-    ArrayOutputStream aos = new ArrayOutputStream(18);
-    aos.writeWord( x );
-    aos.writeWord( y );
-    aos.writeWord( width );
-    aos.writeWord( height );
-    aos.writeDWord( colorFrom );
-    aos.writeDWord( colorFinl );
-    aos.writeBool( isProportional );
-    aos.writeBool( isFill );
-    return aos.getData();
+  public void write( DataOutputStream dos ) throws IOException {
+    dos.writeChar( x );
+    dos.writeChar( y );
+    dos.writeChar( width );
+    dos.writeChar( height );
+    dos.writeInt( colorFrom );
+    dos.writeInt( colorFinl );
+    dos.writeBoolean( isProportional );
+    dos.writeBoolean( isFill );
   }
 
   @Override
-  public void deserialize( byte[] data ) {
+  public void read( DataInputStream dis ) {
     throw new UnsupportedOperationException( "Not supported yet." );
   }
 }

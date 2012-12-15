@@ -8,13 +8,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-/**c 
+/** 
  *
  * @author solkin
  */
 public class EditorPanel extends javax.swing.JPanel {
 
-  private Fragment figure;
+  private Fragment fragment;
   private Color dark = Color.darkGray;
   private Color light = Color.gray;
   private int startX, startY;
@@ -26,22 +26,22 @@ public class EditorPanel extends javax.swing.JPanel {
   public EditorPanel( int templateWidth, int templateHeight ) {
     initComponents();
 
-    figure = new Fragment( templateWidth, templateHeight, 0, 0,
+    fragment = new Fragment( templateWidth, templateHeight, 0, 0,
             templateWidth * ScaleGraphics.scaleFactor,
             templateHeight * ScaleGraphics.scaleFactor );
     Primitive[] items1 = new Primitive[ 0 ];
 
-    /*items1[0] = new Gradient( 0, 0, 9, 5, actGradFrom, actGradMidd, true, true, figure );
-     items1[1] = new Gradient( 0, 6, 9, 3, actGradAftr, actGradFinl, true, true, figure );
-     items1[2] = new Rect( 0, 0, 10, 10, actBotBorder, false, false, figure );
-     items1[3] = new Line( 0, 0, 10, 0, actOnlTopBorder, false, figure );
-     items1[4] = new Line( 1, -1, -1, -1, actInOnlBotBorder, false, figure );*/
-    /*items1[0] = new Point( -3, -1, 0x000000, false, figure );
-     items1[1] = new Rect( 1, 1, -1, -1, 0x000000, false, false, figure );
-     items1[2] = new Line( 0, 0, 5, 5, 0xff0000, false, figure );*/
-    //items1[0] = new Gradient( 1,1,29, 29, 0x0000ff, 0x00ffff , true, false, figure );
+    /*items1[0] = new Gradient( 0, 0, 9, 5, actGradFrom, actGradMidd, true, true, fragment );
+     items1[1] = new Gradient( 0, 6, 9, 3, actGradAftr, actGradFinl, true, true, fragment );
+     items1[2] = new Rect( 0, 0, 10, 10, actBotBorder, false, false, fragment );
+     items1[3] = new Line( 0, 0, 10, 0, actOnlTopBorder, false, fragment );
+     items1[4] = new Line( 1, -1, -1, -1, actInOnlBotBorder, false, fragment );*/
+    /*items1[0] = new Point( -3, -1, 0x000000, false, fragment );
+     items1[1] = new Rect( 1, 1, -1, -1, 0x000000, false, false, fragment );
+     items1[2] = new Line( 0, 0, 5, 5, 0xff0000, false, fragment );*/
+    //items1[0] = new Gradient( 1,1,29, 29, 0x0000ff, 0x00ffff , true, false, fragment );
 
-    figure.setPrimitives( items1 );
+    fragment.setPrimitives( items1 );
 
     startX = -1;
     startY = -1;
@@ -52,21 +52,21 @@ public class EditorPanel extends javax.swing.JPanel {
   @Override
   public void paint( Graphics g ) {
     /** Locating **/
-    figure.setDrawLocation( ( getWidth() - figure.getDrawWidth() ) / 2,
-            ( getHeight() - figure.getDrawHeight() ) / 2 );
+    fragment.setDrawLocation( ( getWidth() - fragment.getDrawWidth() ) / 2,
+            ( getHeight() - fragment.getDrawHeight() ) / 2 );
     g.setColor( Color.black );
-    g.fillRect( figure.getDrawX(), figure.getDrawY(), figure.getDrawWidth(), figure.getDrawHeight() );
+    g.fillRect( fragment.getDrawX(), fragment.getDrawY(), fragment.getDrawWidth(), fragment.getDrawHeight() );
     /** Drawing net **/
-    for ( int y = 0; y < figure.getDrawHeight(); y += ScaleGraphics.scaleFactor ) {
-      for ( int x = 0; x < figure.getDrawWidth(); x += ScaleGraphics.scaleFactor ) {
+    for ( int y = 0; y < fragment.getDrawHeight(); y += ScaleGraphics.scaleFactor ) {
+      for ( int x = 0; x < fragment.getDrawWidth(); x += ScaleGraphics.scaleFactor ) {
         g.setColor( ( ( ( y / ScaleGraphics.scaleFactor ) % 2 + x / ScaleGraphics.scaleFactor ) % 2 == 0 ? dark : light ) );
-        g.fillRect( figure.getDrawX() + x, figure.getDrawY() + y, ScaleGraphics.scaleFactor, ScaleGraphics.scaleFactor );
+        g.fillRect( fragment.getDrawX() + x, fragment.getDrawY() + y, ScaleGraphics.scaleFactor, ScaleGraphics.scaleFactor );
       }
     }
     /** Fixing time **/
     long time = System.currentTimeMillis();
     /** Painting **/
-    figure.paint( g );
+    fragment.paint( g );
     if ( primitive != null ) {
       primitive.paint( g );
     }
@@ -77,19 +77,19 @@ public class EditorPanel extends javax.swing.JPanel {
   }
 
   public final void setTemplateSize( int width, int height ) {
-    figure.setTemplateSize( width, height );
-    figure.setDrawSize( width * ScaleGraphics.scaleFactor, height * ScaleGraphics.scaleFactor );
+    fragment.setTemplateSize( width, height );
+    fragment.setDrawSize( width * ScaleGraphics.scaleFactor, height * ScaleGraphics.scaleFactor );
     updateDrawSize();
   }
-  
+
   public Dimension getTemplateSize() {
-    return new Dimension(figure.getTemplateWidth(), figure.getTemplateHeight());
+    return new Dimension( fragment.getTemplateWidth(), fragment.getTemplateHeight() );
   }
 
   public final void updateDrawSize() {
-    figure.setDrawSize( figure.getTemplateWidth() * ScaleGraphics.scaleFactor,
-            figure.getTemplateHeight() * ScaleGraphics.scaleFactor );
-    setPreferredSize( new Dimension( figure.getDrawWidth(), figure.getDrawHeight() ) );
+    fragment.setDrawSize( fragment.getTemplateWidth() * ScaleGraphics.scaleFactor,
+            fragment.getTemplateHeight() * ScaleGraphics.scaleFactor );
+    setPreferredSize( new Dimension( fragment.getDrawWidth(), fragment.getDrawHeight() ) );
   }
 
   /** This method is called from within the constructor to
@@ -128,19 +128,19 @@ public class EditorPanel extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-    if ( evt.getX() >= figure.getDrawX() && evt.getX() < figure.getDrawX() + figure.getDrawWidth()
-            && evt.getY() >= figure.getDrawY() && evt.getY() < figure.getDrawY() + figure.getDrawHeight() ) {
-      startX = ( evt.getX() - figure.getDrawX() ) / ScaleGraphics.scaleFactor;
-      startY = ( evt.getY() - figure.getDrawY() ) / ScaleGraphics.scaleFactor;
+    if ( evt.getX() >= fragment.getDrawX() && evt.getX() < fragment.getDrawX() + fragment.getDrawWidth()
+            && evt.getY() >= fragment.getDrawY() && evt.getY() < fragment.getDrawY() + fragment.getDrawHeight() ) {
+      startX = ( evt.getX() - fragment.getDrawX() ) / ScaleGraphics.scaleFactor;
+      startY = ( evt.getY() - fragment.getDrawY() ) / ScaleGraphics.scaleFactor;
       primitive = TCSGEditor.mainFrame.getActivePrimitive();
       if ( primitive != null ) {
         /** Drawing **/
-        primitive.setFigure( figure );
+        primitive.setFigure( fragment );
         primitive.setLocation( startX, startY );
       } else {
         /** Selection **/
-        if ( figure.getPrimitivesCount() > 0 ) {
-          Primitive[] items = figure.getPrimitives();
+        if ( fragment.getPrimitivesCount() > 0 ) {
+          Primitive[] items = fragment.getPrimitives();
           for ( int c = items.length - 1; c >= 0; c-- ) {
             Gabarite gabarite = items[c].getGabarite();
             System.out.println( gabarite.x1 + "<=" + startX + "&&" + gabarite.y1 + "<=" + startY
@@ -167,21 +167,21 @@ public class EditorPanel extends javax.swing.JPanel {
   private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
     System.out.println( "Mouse Released" );
     if ( primitive != null ) {
-      Primitive[] items = new Primitive[ figure.getPrimitivesCount() + 1 ];
-      System.arraycopy( figure.getPrimitives(), 0, items, 0, figure.getPrimitivesCount() );
+      Primitive[] items = new Primitive[ fragment.getPrimitivesCount() + 1 ];
+      System.arraycopy( fragment.getPrimitives(), 0, items, 0, fragment.getPrimitivesCount() );
       items[items.length - 1] = primitive;
-      figure.setPrimitives( items );
+      fragment.setPrimitives( items );
       primitive = null;
     }
   }//GEN-LAST:event_formMouseReleased
 
   private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
     if ( startX >= 0 && startY >= 0 ) {
-      if ( evt.getX() >= figure.getDrawX() && evt.getX() < figure.getDrawX() + figure.getDrawWidth()
-              && evt.getY() >= figure.getDrawY() && evt.getY() < figure.getDrawY() + figure.getDrawHeight() ) {
+      if ( evt.getX() >= fragment.getDrawX() && evt.getX() < fragment.getDrawX() + fragment.getDrawWidth()
+              && evt.getY() >= fragment.getDrawY() && evt.getY() < fragment.getDrawY() + fragment.getDrawHeight() ) {
         System.out.println( "Mouse Dragged" );
-        activX = ( evt.getX() - figure.getDrawX() ) / ScaleGraphics.scaleFactor;
-        activY = ( evt.getY() - figure.getDrawY() ) / ScaleGraphics.scaleFactor;
+        activX = ( evt.getX() - fragment.getDrawX() ) / ScaleGraphics.scaleFactor;
+        activY = ( evt.getY() - fragment.getDrawY() ) / ScaleGraphics.scaleFactor;
         if ( primitive != null ) {
           primitive.setSecLocation( activX, activY );
         }
@@ -200,7 +200,7 @@ public class EditorPanel extends javax.swing.JPanel {
   // End of variables declaration//GEN-END:variables
 
   public Fragment getFigure() {
-    return figure;
+    return fragment;
   }
 
   private void setSelectedPrimitive( Primitive primitive ) {

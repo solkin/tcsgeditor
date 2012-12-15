@@ -19,12 +19,12 @@ public class TCSGEditor {
   public static void main( String[] args ) {
     try {
       /*LookAndFeelInfo[] lafi = UIManager.getInstalledLookAndFeels();
-      for ( int c = 0; c < lafi.length; c++ ) {
-        if ( lafi[c].getName().equals( "GTK+" ) ) {
-          UIManager.setLookAndFeel( lafi[c].getClassName() );
-          break;
-        }
-      }*/
+       for ( int c = 0; c < lafi.length; c++ ) {
+       if ( lafi[c].getName().equals( "GTK+" ) ) {
+       UIManager.setLookAndFeel( lafi[c].getClassName() );
+       break;
+       }
+       }*/
       UIManager.setLookAndFeel( "com.jgoodies.looks.plastic.PlasticXPLookAndFeel" );
     } catch ( ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex ) {
       Logger.getLogger( TCSGEditor.class.getName() ).log( Level.SEVERE, null, ex );

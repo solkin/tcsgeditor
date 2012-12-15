@@ -1,7 +1,5 @@
 package tcsgeditor;
 
-import java.awt.Color;
-
 /**
  *
  * @author solkin
@@ -124,7 +122,7 @@ public class ColorDialog extends javax.swing.JDialog {
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     // TCSGEditor.mainFrame.setColor( jColorChooser1.getColor(), jTextField1.getText() );
-    colorListener.colorChanged( new NamedColor(jColorChooser1.getColor().getRGB(), jTextField1.getText()) );
+    colorListener.colorChanged( new NamedColor( jColorChooser1.getColor().getRGB(), jTextField1.getText() ) );
     dispose();
   }//GEN-LAST:event_jButton1ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables

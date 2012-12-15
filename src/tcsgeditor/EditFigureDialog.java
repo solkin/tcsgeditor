@@ -1,7 +1,5 @@
 package tcsgeditor;
 
-import com.tomclaw.tcsg.ScaleGraphics;
-
 /**
  *
  * @author solkin
@@ -15,12 +13,12 @@ public class EditFigureDialog extends javax.swing.JDialog {
 
   /** Creates new form EditFigureDialog */
   public EditFigureDialog( java.awt.Frame parent, boolean modal ) {
-    this( parent, modal, -1, "figure", 16, 16 );
+    this( parent, modal, -1, "fragment", 16, 16 );
   }
 
   /** Creates new form EditFigureDialog */
-  public EditFigureDialog( java.awt.Frame parent, boolean modal, int index, 
-          String figureName, int templateWidth, int templateHeight) {
+  public EditFigureDialog( java.awt.Frame parent, boolean modal, int index,
+          String figureName, int templateWidth, int templateHeight ) {
     super( parent, modal );
     this.index = index;
     this.figureName = figureName;

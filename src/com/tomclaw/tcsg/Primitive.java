@@ -1,6 +1,9 @@
 package com.tomclaw.tcsg;
 
 import java.awt.Graphics;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  *
@@ -17,7 +20,7 @@ public abstract class Primitive implements Cloneable {
 
   public abstract void setSecLocation( int x, int y );
 
-  public abstract void setFigure( Fragment figure );
+  public abstract void setFigure( Fragment fragment );
 
   public abstract void setLocation( int x, int y );
 
@@ -38,7 +41,7 @@ public abstract class Primitive implements Cloneable {
 
   public abstract int getType();
 
-  public abstract byte[] serialize();
+  public abstract void write( DataOutputStream dos ) throws IOException;
 
-  public abstract void deserialize( byte[] data );
+  public abstract void read( DataInputStream dis ) throws IOException;
 }
