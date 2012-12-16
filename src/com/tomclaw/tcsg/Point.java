@@ -87,16 +87,16 @@ public class Point extends Primitive {
 
   @Override
   public void write( DataOutputStream dos ) throws IOException {
-    dos.writeChar( x );
-    dos.writeChar( y );
+    dos.writeShort( x );
+    dos.writeShort( y );
     dos.writeInt( color );
     dos.writeBoolean( isProportional );
   }
 
   @Override
   public final void read( DataInputStream dis ) throws IOException {
-    x = dis.readChar();
-    y = dis.readChar();
+    x = dis.readShort();
+    y = dis.readShort();
     color = dis.readInt();
     isProportional = dis.readBoolean();
   }

@@ -188,25 +188,25 @@ public class Fragment {
   }
 
   public void write( DataOutputStream dos ) throws IOException {
-    dos.writeChar( templateWidth );
-    dos.writeChar( templateHeight );
-    dos.writeChar( items.length );
+    dos.writeShort( templateWidth );
+    dos.writeShort( templateHeight );
+    dos.writeShort( items.length );
     /** Cycling all items **/
     for ( int c = 0; c < items.length; c++ ) {
-      dos.writeChar( items[c].getType() );
+      dos.writeShort( items[c].getType() );
       items[c].write( dos );
     }
   }
 
   public final void read( DataInputStream dis ) throws IOException {
-    templateWidth = dis.readChar();
-    templateHeight = dis.readChar();
-    int itemsCount = dis.readChar();
+    templateWidth = dis.readShort();
+    templateHeight = dis.readShort();
+    int itemsCount = dis.readShort();
     if ( itemsCount > 0 ) {
       items = new Primitive[ itemsCount ];
       int itemType;
       for ( int c = 0; c < itemsCount; c++ ) {
-        itemType = dis.readChar();
+        itemType = dis.readShort();
         switch ( itemType ) {
           case Primitive.TYPE_POINT: {
             items[c] = new Point( dis );

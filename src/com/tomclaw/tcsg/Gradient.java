@@ -128,10 +128,10 @@ public class Gradient extends Primitive {
 
   @Override
   public void write( DataOutputStream dos ) throws IOException {
-    dos.writeChar( x );
-    dos.writeChar( y );
-    dos.writeChar( width );
-    dos.writeChar( height );
+    dos.writeShort( x );
+    dos.writeShort( y );
+    dos.writeShort( width );
+    dos.writeShort( height );
     dos.writeInt( colorFrom );
     dos.writeInt( colorFinl );
     dos.writeBoolean( isProportional );
@@ -141,10 +141,10 @@ public class Gradient extends Primitive {
 
   @Override
   public final void read( DataInputStream dis ) throws IOException {
-    x = dis.readChar();
-    y = dis.readChar();
-    width = dis.readChar();
-    height = dis.readChar();
+    x = dis.readShort();
+    y = dis.readShort();
+    width = dis.readShort();
+    height = dis.readShort();
     colorFrom = dis.readInt();
     colorFinl = dis.readInt();
     isProportional = dis.readBoolean();

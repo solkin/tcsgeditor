@@ -317,21 +317,22 @@ public class MainFrame extends javax.swing.JFrame {
   }
 
   public void writeToStream( OutputStream os ) {
+    time = System.currentTimeMillis();
     try {
       DataOutputStream dos = new DataOutputStream( os );
       /** Header **/
       dos.writeBytes( "TCSG" );
       /** Info **/
-      dos.writeChar( version );
+      dos.writeShort( version );
       dos.writeUTF( author );
       dos.writeUTF( description );
-      dos.writeLong( System.currentTimeMillis() );
+      dos.writeLong( time );
       /** Blocks count info **/
-      dos.writeChar( 0x02 );
+      dos.writeShort( 0x02 );
       /** Colors **/
       dos.writeByte( 0x01 );
       NamedColor[] colors = getNamedColors();
-      dos.writeChar( colors.length );
+      dos.writeShort( colors.length );
       for ( int c = 0; c < colors.length; c++ ) {
         dos.writeInt( colors[c].getRGB() );
         dos.writeUTF( colors[c].getName() );
@@ -340,7 +341,7 @@ public class MainFrame extends javax.swing.JFrame {
       /** Fragments **/
       dos.writeByte( 0x02 );
       int fragmentCount = jTabbedPane1.getTabCount();
-      dos.writeChar( fragmentCount );
+      dos.writeShort( fragmentCount );
       for ( int c = 0; c < fragmentCount; c++ ) {
         String name = jTabbedPane1.getTitleAt( c );
         EditorPanel t_ePanel = ( ( EditorPanel ) ( ( JScrollPane ) jTabbedPane1.getComponentAt( c ) ).getViewport().getView() );
@@ -361,18 +362,18 @@ public class MainFrame extends javax.swing.JFrame {
       byte[] header = new byte[ 4 ];
       dis.read( header );
       if ( Arrays.equals( header, "TCSG".getBytes() ) ) {
-        int fileVersion = dis.readChar();
+        int fileVersion = dis.readShort();
         if ( fileVersion == version ) {
           author = dis.readUTF();
           description = dis.readUTF();
           time = dis.readLong();
-          int blocksCount = dis.readChar();
+          int blocksCount = dis.readShort();
           for ( int i = 0; i < blocksCount; i++ ) {
             int blockType = dis.readByte();
             switch ( blockType ) {
               case 0x01: {
                 /** Colors **/
-                int colorsCount = dis.readChar();
+                int colorsCount = dis.readShort();
                 NamedColor[] colors = new NamedColor[ colorsCount ];
                 for ( int c = 0; c < colorsCount; c++ ) {
                   int color = dis.readInt();
@@ -384,7 +385,7 @@ public class MainFrame extends javax.swing.JFrame {
               }
               case 0x02: {
                 /** Fragments **/
-                int fragmentCount = dis.readChar();
+                int fragmentCount = dis.readShort();
                 String[] names = new String[ fragmentCount ];
                 Fragment[] fragments = new Fragment[ fragmentCount ];
                 for ( int c = 0; c < fragmentCount; c++ ) {

@@ -107,10 +107,10 @@ public class Rect extends Primitive {
 
   @Override
   public void write( DataOutputStream dos ) throws IOException {
-    dos.writeChar( x );
-    dos.writeChar( y );
-    dos.writeChar( width );
-    dos.writeChar( height );
+    dos.writeShort( x );
+    dos.writeShort( y );
+    dos.writeShort( width );
+    dos.writeShort( height );
     dos.writeInt( color );
     dos.writeBoolean( isProportional );
     dos.writeBoolean( isFill );
@@ -118,10 +118,10 @@ public class Rect extends Primitive {
 
   @Override
   public final void read( DataInputStream dis ) throws IOException {
-    x = dis.readChar();
-    y = dis.readChar();
-    width = dis.readChar();
-    height = dis.readChar();
+    x = dis.readShort();
+    y = dis.readShort();
+    width = dis.readShort();
+    height = dis.readShort();
     color = dis.readInt();
     isProportional = dis.readBoolean();
     isFill = dis.readBoolean();

@@ -98,20 +98,20 @@ public class Line extends Primitive {
 
   @Override
   public void write( DataOutputStream dos ) throws IOException {
-    dos.writeChar( x1 );
-    dos.writeChar( y1 );
-    dos.writeChar( x2 );
-    dos.writeChar( y2 );
+    dos.writeShort( x1 );
+    dos.writeShort( y1 );
+    dos.writeShort( x2 );
+    dos.writeShort( y2 );
     dos.writeInt( color );
     dos.writeBoolean( isProportional );
   }
 
   @Override
   public final void read( DataInputStream dis ) throws IOException {
-    x1 = dis.readChar();
-    y1 = dis.readChar();
-    x2 = dis.readChar();
-    y2 = dis.readChar();
+    x1 = dis.readShort();
+    y1 = dis.readShort();
+    x2 = dis.readShort();
+    y2 = dis.readShort();
     color = dis.readInt();
     isProportional = dis.readBoolean();
   }
