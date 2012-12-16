@@ -31,8 +31,10 @@ public class MainFrame extends javax.swing.JFrame {
   public EditorPanel ePanel;
   private Primitive activePrimitive;
   public static String author;
+  public static String description;
   public static final int version = 0x0001;
-  public File file;
+  public static File file;
+  public static long time;
 
   /** Creates new form MainFrame */
   public MainFrame() {
@@ -40,9 +42,7 @@ public class MainFrame extends javax.swing.JFrame {
     initToolPanel();
     setLocationRelativeTo( null );
     /** Sample fragment **/
-    file = null;
-    author = "TomClaw Software";
-    createFigure( "figure1", 32, 32 );
+    resetFile();
   }
 
   /**
@@ -246,6 +246,7 @@ public class MainFrame extends javax.swing.JFrame {
     for ( int c = 0; c < namedColors.length; c++ ) {
       model.addRow( new Object[] { namedColors[c], namedColors[c].getName() } );
     }
+    jTable1.updateUI();
   }
 
   /**
@@ -318,6 +319,7 @@ public class MainFrame extends javax.swing.JFrame {
       /** Info **/
       dos.writeChar( version );
       dos.writeUTF( author );
+      dos.writeUTF( description );
       dos.writeLong( System.currentTimeMillis() );
       /** Blocks count info **/
       dos.writeChar( 0x02 );
@@ -347,6 +349,7 @@ public class MainFrame extends javax.swing.JFrame {
   }
 
   public void readFromStream( InputStream is ) {
+    resetFile();
     try {
       DataInputStream dis = new DataInputStream( is );
       /** Header **/
@@ -356,7 +359,8 @@ public class MainFrame extends javax.swing.JFrame {
         int fileVersion = dis.readChar();
         if ( fileVersion == version ) {
           author = dis.readUTF();
-          long time = dis.readLong();
+          description = dis.readUTF();
+          time = dis.readLong();
           int blocksCount = dis.readChar();
           for ( int i = 0; i < blocksCount; i++ ) {
             int blockType = dis.readByte();
@@ -400,18 +404,22 @@ public class MainFrame extends javax.swing.JFrame {
   }
 
   public void saveToFile( File file ) {
-    this.file = file;
+    MainFrame.file = file;
     try {
-      try ( java.io.FileOutputStream fos = new java.io.FileOutputStream( file ) ) {
+      String path = file.getPath();
+      if ( !path.endsWith( ".dig" ) ) {
+        path += ".dig";
+      }
+      try ( java.io.FileOutputStream fos = new java.io.FileOutputStream( path ) ) {
         writeToStream( fos );
       }
     } catch ( IOException ex ) {
       Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
     }
   }
-  
+
   public void openFromFile( File file ) {
-    this.file = file;
+    MainFrame.file = file;
     try {
       try ( java.io.FileInputStream fis = new java.io.FileInputStream( file ) ) {
         readFromStream( fis );
@@ -419,6 +427,19 @@ public class MainFrame extends javax.swing.JFrame {
     } catch ( IOException ex ) {
       Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
     }
+  }
+
+  public final void resetFile() {
+    DefaultTableModel model = ( ( DefaultTableModel ) jTable1.getModel() );
+    model.getDataVector().removeAllElements();
+    jTable1.updateUI();
+    jTabbedPane1.removeAll();
+    propertiesPanel.removeAll();
+    propertiesPanel.updateUI();
+    time = 0;
+    file = null;
+    author = "TomClaw Software";
+    description = "";
   }
 
   /** This method is called from within the constructor to
@@ -434,6 +455,7 @@ public class MainFrame extends javax.swing.JFrame {
     jButton1 = new javax.swing.JButton();
     jButton3 = new javax.swing.JButton();
     jButton6 = new javax.swing.JButton();
+    jButton14 = new javax.swing.JButton();
     jSeparator1 = new javax.swing.JToolBar.Separator();
     jButton7 = new javax.swing.JButton();
     jButton8 = new javax.swing.JButton();
@@ -496,6 +518,17 @@ public class MainFrame extends javax.swing.JFrame {
       }
     });
     jToolBar1.add(jButton6);
+
+    jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-info.png"))); // NOI18N
+    jButton14.setFocusable(false);
+    jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    jButton14.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    jButton14.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton14ActionPerformed(evt);
+      }
+    });
+    jToolBar1.add(jButton14);
     jToolBar1.add(jSeparator1);
 
     jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-create-fragment.png"))); // NOI18N
@@ -693,14 +726,14 @@ public class MainFrame extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jSplitPane1))
+        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE))
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    // TODO
+    resetFile();
   }//GEN-LAST:event_jButton1ActionPerformed
 
   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -759,8 +792,11 @@ public class MainFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_jTabbedPane1StateChanged
 
   private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-    new PreviewDialog( this, true, getActiveEditorPanel().getFigure() )
-            .setVisible( true );
+    EditorPanel t_ePanel = getActiveEditorPanel();
+    if ( t_ePanel != null ) {
+      new PreviewDialog( this, true, t_ePanel.getFigure() )
+              .setVisible( true );
+    }
   }//GEN-LAST:event_jButton13ActionPerformed
 
   private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -790,12 +826,17 @@ public class MainFrame extends javax.swing.JFrame {
   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     ( new FileChooserDialog( this, true, false, file ) ).setVisible( true );
   }//GEN-LAST:event_jButton3ActionPerformed
+
+  private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+    ( new InfoDialog( this, true ) ).setVisible( true );
+  }//GEN-LAST:event_jButton14ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton10;
   private javax.swing.JButton jButton11;
   private javax.swing.JButton jButton12;
   private javax.swing.JButton jButton13;
+  private javax.swing.JButton jButton14;
   private javax.swing.JButton jButton2;
   private javax.swing.JButton jButton3;
   private javax.swing.JButton jButton4;
