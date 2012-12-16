@@ -24,7 +24,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jToolBar1" max="32767" attributes="0"/>
-          <Component id="jSplitPane1" alignment="1" pref="793" max="32767" attributes="0"/>
+          <Component id="jSplitPane1" alignment="1" pref="797" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -51,6 +51,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-create-file.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x421;&#x43e;&#x437;&#x434;&#x430;&#x442;&#x44c;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -64,6 +65,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-open-file.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x41e;&#x442;&#x43a;p&#x44b;&#x442;&#x44c;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -77,6 +79,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-save-file.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x421;&#x43e;xp&#x430;&#x43d;&#x438;&#x442;&#x44c;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -90,6 +93,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-info.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x421;&#x432;&#x435;&#x434;&#x435;&#x43d;&#x438;&#x44f; &#x43e; &#x444;&#x430;&#x439;&#x43b;&#x435;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -105,7 +109,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-create-fragment.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="toolTipText" type="java.lang.String" value="&#x414;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c; &#x444;p&#x430;&#x433;&#x43c;&#x435;&#x43d;&#x442;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -119,6 +123,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-remove-fragment.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x423;&#x434;&#x430;&#x43b;&#x438;&#x442;&#x44c; &#x444;p&#x430;&#x433;&#x43c;&#x435;&#x43d;&#x442;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -132,6 +137,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-edit-fragment.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="P&#x435;&#x434;&#x430;&#x43a;&#x442;&#x438;p&#x43e;&#x432;&#x430;&#x442;&#x44c; &#x444;p&#x430;&#x433;&#x43c;&#x435;&#x43d;&#x442;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -147,6 +153,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-zoom-in.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x423;&#x432;&#x435;&#x43b;&#x438;&#x447;&#x438;&#x442;&#x44c;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -160,6 +167,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-zoom-out.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x423;&#x43c;&#x435;&#x43d;&#x44c;&#x448;&#x438;&#x442;&#x44c;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -173,6 +181,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-zoom-original.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x41c;&#x430;&#x441;&#x448;&#x442;&#x430;&#x431; 1:1"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -188,6 +197,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/res/icon-preview.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x41f;p&#x435;&#x432;&#x44c;&#x44e;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -224,7 +234,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jScrollPane1" pref="343" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="321" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -296,7 +306,7 @@
           <SubComponents>
             <Container class="javax.swing.JSplitPane" name="jSplitPane3">
               <Properties>
-                <Property name="dividerLocation" type="int" value="160"/>
+                <Property name="dividerLocation" type="int" value="260"/>
                 <Property name="orientation" type="int" value="0"/>
                 <Property name="resizeWeight" type="double" value="0.5"/>
               </Properties>
@@ -336,7 +346,7 @@
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="158" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="241" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
