@@ -769,6 +769,17 @@ public class MainFrame extends javax.swing.JFrame {
         jSplitPane2.setRightComponent(jSplitPane3);
 
         jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseReleased(java.awt.event.MouseEvent evt)
+            {
+                jTabbedPane1MouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener()
         {
             public void stateChanged(javax.swing.event.ChangeEvent evt)
@@ -896,6 +907,21 @@ public class MainFrame extends javax.swing.JFrame {
   private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
     ( new InfoDialog( this, true ) ).setVisible( true );
   }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jTabbedPane1MouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTabbedPane1MouseReleased
+    {//GEN-HEADEREND:event_jTabbedPane1MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1MouseReleased
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTabbedPane1MouseClicked
+    {//GEN-HEADEREND:event_jTabbedPane1MouseClicked
+        if (jTabbedPane1.getTabCount()==0) JOptionPane.showMessageDialog(
+                this,
+                "Сначала создайте фpагмент.",
+                "",
+                JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
