@@ -274,7 +274,7 @@ public class MainFrame extends javax.swing.JFrame {
           if (t_name != null && t_name.equals(name))
           {
               if (force || JOptionPane.showConfirmDialog(this,
-                      "Такой цвет уже существует. Заменить?",
+                      "Цвет с таким именем уже существует. Заменить?",
                       "", JOptionPane.YES_NO_OPTION)==0)
               {
                   model.setValueAt(color, c, 0);
