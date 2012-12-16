@@ -289,6 +289,9 @@ public class MainFrame extends javax.swing.JFrame {
     /** Obtain editor panel **/
     EditorPanel editorPanel = getActiveEditorPanel();
     if ( editorPanel != null ) {
+      if(scaleFactor < 1) {
+        scaleFactor = 1;
+      }
       /** Setting scale factor up **/
       ScaleGraphics.scaleFactor = scaleFactor;
       editorPanel.updateDrawSize();
