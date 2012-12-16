@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -493,6 +494,8 @@ public class MainFrame extends javax.swing.JFrame {
         jButton12 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         jButton13 = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JToolBar.Separator();
+        jButton15 = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
@@ -669,6 +672,20 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButton13);
+        jToolBar1.add(jSeparator4);
+
+        jButton15.setText("ОТМЕНА");
+        jButton15.setFocusable(false);
+        jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton15.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton15.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton15ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton15);
 
         jSplitPane1.setDividerLocation(150);
 
@@ -928,6 +945,18 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton15ActionPerformed
+    {//GEN-HEADEREND:event_jButton15ActionPerformed
+        Fragment fragment = ePanel.getFigure();
+        if (fragment == null || fragment.getPrimitivesCount()==0) return;
+        
+        System.out.println("Отменяем");
+        Primitive[] items = new Primitive[ fragment.getPrimitivesCount() - 1 ];        
+        System.arraycopy( fragment.getPrimitives(), 0, items, 0, fragment.getPrimitivesCount() - 1 );
+        fragment.setPrimitives( items );
+        ePanel.updateUI();
+    }//GEN-LAST:event_jButton15ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -935,6 +964,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -949,6 +979,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JSplitPane jSplitPane3;
