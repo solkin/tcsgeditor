@@ -19,6 +19,10 @@ public class Rect extends Primitive {
   private boolean isFill;
   private int t_x, t_y, t_w, t_h;
 
+  public Rect( DataInputStream dis ) throws IOException {
+    read( dis );
+  }
+
   public Rect( int x, int y, int width, int height, int color, boolean isFill, boolean isProportional, Fragment fragment ) {
     this.x = x;
     this.y = y;
@@ -113,7 +117,13 @@ public class Rect extends Primitive {
   }
 
   @Override
-  public void read( DataInputStream dis ) {
-    throw new UnsupportedOperationException( "Not supported yet." );
+  public final void read( DataInputStream dis ) throws IOException {
+    x = dis.readChar();
+    y = dis.readChar();
+    width = dis.readChar();
+    height = dis.readChar();
+    color = dis.readInt();
+    isProportional = dis.readBoolean();
+    isFill = dis.readBoolean();
   }
 }

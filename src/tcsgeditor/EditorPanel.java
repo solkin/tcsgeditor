@@ -48,6 +48,18 @@ public class EditorPanel extends javax.swing.JPanel {
 
     updateDrawSize();
   }
+  
+  /** Creates new form EditorPanel */
+  public EditorPanel( Fragment fragment ) {
+    initComponents();
+
+    this.fragment = fragment;
+
+    startX = -1;
+    startY = -1;
+
+    updateDrawSize();
+  }
 
   @Override
   public void paint( Graphics g ) {

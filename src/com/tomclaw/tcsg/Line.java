@@ -17,6 +17,10 @@ public class Line extends Primitive {
   private boolean isProportional;
   private Fragment fragment;
 
+  public Line( DataInputStream dis ) throws IOException {
+    read( dis );
+  }
+
   public Line( int x1, int y1, int x2, int y2, int color, boolean isProportional, Fragment fragment ) {
     this.x1 = x1;
     this.y1 = y1;
@@ -103,7 +107,12 @@ public class Line extends Primitive {
   }
 
   @Override
-  public void read( DataInputStream dis ) {
-    throw new UnsupportedOperationException( "Not supported yet." );
+  public final void read( DataInputStream dis ) throws IOException {
+    x1 = dis.readChar();
+    y1 = dis.readChar();
+    x2 = dis.readChar();
+    y2 = dis.readChar();
+    color = dis.readInt();
+    isProportional = dis.readBoolean();
   }
 }

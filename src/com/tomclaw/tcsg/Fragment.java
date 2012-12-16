@@ -1,6 +1,7 @@
 package com.tomclaw.tcsg;
 
 import java.awt.Graphics;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
@@ -13,6 +14,10 @@ public class Fragment {
   private Primitive[] items;
   private int templateWidth, templateHeight;
   private int drawX, drawY, drawWidth, drawHeight;
+
+  public Fragment( DataInputStream dis ) throws IOException {
+    read( dis );
+  }
 
   public Fragment( int templateWidth, int templateHeight,
           int drawX, int drawY, int drawWidth, int drawHeight ) {
@@ -186,6 +191,42 @@ public class Fragment {
     for ( int c = 0; c < items.length; c++ ) {
       dos.writeChar( items[c].getType() );
       items[c].write( dos );
+    }
+  }
+
+  public final void read( DataInputStream dis ) throws IOException {
+    templateWidth = dis.readChar();
+    templateHeight = dis.readChar();
+    int itemsCount = dis.readChar();
+    if ( itemsCount > 0 ) {
+      items = new Primitive[ itemsCount ];
+      int itemType;
+      for ( int c = 0; c < itemsCount; c++ ) {
+        itemType = dis.readChar();
+        switch ( itemType ) {
+          case Primitive.TYPE_POINT: {
+            items[c] = new Point( dis );
+            break;
+          }
+          case Primitive.TYPE_LINE: {
+            items[c] = new Line( dis );
+            break;
+          }
+          case Primitive.TYPE_RECT: {
+            items[c] = new Rect( dis );
+            break;
+          }
+          case Primitive.TYPE_GRADIENT: {
+            items[c] = new Gradient( dis );
+            break;
+          }
+        }
+        if ( items[c] != null ) {
+          items[c].setFigure( this );
+        } else {
+          throw new IOException();
+        }
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 package tcsgeditor;
 
+import com.tomclaw.tcsg.Fragment;
 import com.tomclaw.tcsg.Gradient;
 import com.tomclaw.tcsg.Line;
 import com.tomclaw.tcsg.Point;
@@ -9,9 +10,12 @@ import com.tomclaw.tcsg.ScaleGraphics;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JScrollPane;
@@ -117,11 +121,21 @@ public class MainFrame extends javax.swing.JFrame {
    * @param templateWidth
    * @param templateHeight 
    */
-  public final void createFigure( String title, int templateWidth, int templateHeight ) {
+  public final void createFigure( String name, int templateWidth, int templateHeight ) {
     javax.swing.JScrollPane jScrollPane = new javax.swing.JScrollPane();
-    jTabbedPane1.addTab( title, jScrollPane );
+    jTabbedPane1.addTab( name, jScrollPane );
     ePanel = new EditorPanel( templateWidth, templateHeight );
     jScrollPane.setViewportView( ePanel );
+  }
+
+  public final void setFigures( String[] names, Fragment[] fragments ) {
+    jTabbedPane1.removeAll();
+    for ( int c = 0; c < names.length; c++ ) {
+      javax.swing.JScrollPane jScrollPane = new javax.swing.JScrollPane();
+      jTabbedPane1.addTab( names[c], jScrollPane );
+      ePanel = new EditorPanel( fragments[c] );
+      jScrollPane.setViewportView( ePanel );
+    }
   }
 
   /**
@@ -223,6 +237,14 @@ public class MainFrame extends javax.swing.JFrame {
     return namedColors;
   }
 
+  public void setNamedColors( NamedColor[] namedColors ) {
+    DefaultTableModel model = ( ( DefaultTableModel ) jTable1.getModel() );
+    model.getDataVector().removeAllElements();
+    for ( int c = 0; c < namedColors.length; c++ ) {
+      model.addRow( new Object[] { namedColors[c], namedColors[c].getName() } );
+    }
+  }
+
   /**
    * Updatesor creates specified color
    * @param color
@@ -247,7 +269,10 @@ public class MainFrame extends javax.swing.JFrame {
   public EditorPanel getActiveEditorPanel() {
     /** Checking for at least one tab exist **/
     if ( jTabbedPane1.getTabCount() > 0 ) {
-      return ( ( EditorPanel ) ( ( JScrollPane ) jTabbedPane1.getSelectedComponent() ).getViewport().getView() );
+      JScrollPane jScrollPane = ( JScrollPane ) jTabbedPane1.getSelectedComponent();
+      if ( jScrollPane != null ) {
+        return ( ( EditorPanel ) jScrollPane.getViewport().getView() );
+      }
     }
     return null;
   }
@@ -291,6 +316,8 @@ public class MainFrame extends javax.swing.JFrame {
       dos.writeChar( version );
       dos.writeUTF( author );
       dos.writeLong( System.currentTimeMillis() );
+      /** Blocks count info **/
+      dos.writeChar( 0x02 );
       /** Colors **/
       dos.writeByte( 0x01 );
       NamedColor[] colors = getNamedColors();
@@ -311,6 +338,59 @@ public class MainFrame extends javax.swing.JFrame {
         t_ePanel.getFigure().write( dos );
       }
       dos.flush();
+    } catch ( IOException ex ) {
+      Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
+    }
+  }
+
+  public void readFromStream( InputStream is ) {
+    try {
+      DataInputStream dis = new DataInputStream( is );
+      /** Header **/
+      byte[] header = new byte[ 4 ];
+      dis.read( header );
+      if ( Arrays.equals( header, "TCSG".getBytes() ) ) {
+        int fileVersion = dis.readChar();
+        if ( fileVersion == version ) {
+          author = dis.readUTF();
+          long time = dis.readLong();
+          int blocksCount = dis.readChar();
+          for ( int i = 0; i < blocksCount; i++ ) {
+            int blockType = dis.readByte();
+            switch ( blockType ) {
+              case 0x01: {
+                /** Colors **/
+                int colorsCount = dis.readChar();
+                NamedColor[] colors = new NamedColor[ colorsCount ];
+                for ( int c = 0; c < colorsCount; c++ ) {
+                  int color = dis.readInt();
+                  String name = dis.readUTF();
+                  colors[c] = new NamedColor( color, name );
+                }
+                setNamedColors( colors );
+                break;
+              }
+              case 0x02: {
+                /** Fragments **/
+                int fragmentCount = dis.readChar();
+                String[] names = new String[ fragmentCount ];
+                Fragment[] fragments = new Fragment[ fragmentCount ];
+                for ( int c = 0; c < fragmentCount; c++ ) {
+                  names[c] = dis.readUTF();
+                  fragments[c] = new Fragment( dis );
+                }
+                setFigures( names, fragments );
+                break;
+              }
+            }
+          }
+        } else {
+          System.out.println( "Incorrect digest file version: " + fileVersion
+                  + " instead of " + version );
+        }
+      } else {
+        System.out.println( "Incorrect file" );
+      }
     } catch ( IOException ex ) {
       Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
     }
@@ -374,6 +454,11 @@ public class MainFrame extends javax.swing.JFrame {
     jButton3.setFocusable(false);
     jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
     jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    jButton3.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton3ActionPerformed(evt);
+      }
+    });
     jToolBar1.add(jButton3);
 
     jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-save-file.png"))); // NOI18N
@@ -682,6 +767,16 @@ public class MainFrame extends javax.swing.JFrame {
       Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
     }
   }//GEN-LAST:event_jButton6ActionPerformed
+
+  private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    try {
+      try ( java.io.FileInputStream fis = new java.io.FileInputStream( "/home/solkin/fragments.cut" ) ) {
+        readFromStream( fis );
+      }
+    } catch ( IOException ex ) {
+      Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
+    }
+  }//GEN-LAST:event_jButton3ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton10;

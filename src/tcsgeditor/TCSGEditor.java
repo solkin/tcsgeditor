@@ -25,7 +25,10 @@ public class TCSGEditor {
        break;
        }
        }*/
-      UIManager.setLookAndFeel( "com.jgoodies.looks.plastic.PlasticXPLookAndFeel" );
+      // UIManager.setLookAndFeel( "com.jgoodies.looks.plastic.PlasticXPLookAndFeel" );
+      // UIManager.setLookAndFeel( "com.pagosoft.plaf.PgsLookAndFeel" );
+      UIManager.setLookAndFeel( "com.lipstikLF.LipstikLookAndFeel" );
+      // UIManager.setLookAndFeel( "net.infonode.gui.laf.InfoNodeLookAndFeel" );
     } catch ( ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex ) {
       Logger.getLogger( TCSGEditor.class.getName() ).log( Level.SEVERE, null, ex );
     }

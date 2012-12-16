@@ -21,6 +21,10 @@ public class Gradient extends Primitive {
   private boolean isVertical;
   private int t_x, t_y, t_w, t_h;
 
+  public Gradient( DataInputStream dis ) throws IOException {
+    read( dis );
+  }
+
   public Gradient( int x, int y, int width, int height, int colorFrom,
           int colorFinl, boolean isFill, boolean isVertical,
           boolean isProportional, Fragment fragment ) {
@@ -132,10 +136,19 @@ public class Gradient extends Primitive {
     dos.writeInt( colorFinl );
     dos.writeBoolean( isProportional );
     dos.writeBoolean( isFill );
+    dos.writeBoolean( isVertical );
   }
 
   @Override
-  public void read( DataInputStream dis ) {
-    throw new UnsupportedOperationException( "Not supported yet." );
+  public final void read( DataInputStream dis ) throws IOException {
+    x = dis.readChar();
+    y = dis.readChar();
+    width = dis.readChar();
+    height = dis.readChar();
+    colorFrom = dis.readInt();
+    colorFinl = dis.readInt();
+    isProportional = dis.readBoolean();
+    isFill = dis.readBoolean();
+    isVertical = dis.readBoolean();
   }
 }

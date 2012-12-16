@@ -17,6 +17,10 @@ public class Point extends Primitive {
   private boolean isProportional;
   private Fragment fragment;
 
+  public Point( DataInputStream dis ) throws IOException {
+    read( dis );
+  }
+
   public Point( int x, int y, int color, boolean isProportional, Fragment fragment ) {
     this.x = x;
     this.y = y;
@@ -90,7 +94,10 @@ public class Point extends Primitive {
   }
 
   @Override
-  public void read( DataInputStream dis ) {
-    throw new UnsupportedOperationException( "Not supported yet." );
+  public final void read( DataInputStream dis ) throws IOException {
+    x = dis.readChar();
+    y = dis.readChar();
+    color = dis.readInt();
+    isProportional = dis.readBoolean();
   }
 }
