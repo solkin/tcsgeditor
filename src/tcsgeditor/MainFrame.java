@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,6 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
   private Primitive activePrimitive;
   public static String author;
   public static final int version = 0x0001;
+  public File file;
 
   /** Creates new form MainFrame */
   public MainFrame() {
@@ -38,8 +40,9 @@ public class MainFrame extends javax.swing.JFrame {
     initToolPanel();
     setLocationRelativeTo( null );
     /** Sample fragment **/
-    createFigure( "figure1", 32, 32 );
+    file = null;
     author = "TomClaw Software";
+    createFigure( "figure1", 32, 32 );
   }
 
   /**
@@ -390,6 +393,28 @@ public class MainFrame extends javax.swing.JFrame {
         }
       } else {
         System.out.println( "Incorrect file" );
+      }
+    } catch ( IOException ex ) {
+      Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
+    }
+  }
+
+  public void saveToFile( File file ) {
+    this.file = file;
+    try {
+      try ( java.io.FileOutputStream fos = new java.io.FileOutputStream( file ) ) {
+        writeToStream( fos );
+      }
+    } catch ( IOException ex ) {
+      Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
+    }
+  }
+  
+  public void openFromFile( File file ) {
+    this.file = file;
+    try {
+      try ( java.io.FileInputStream fis = new java.io.FileInputStream( file ) ) {
+        readFromStream( fis );
       }
     } catch ( IOException ex ) {
       Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
@@ -759,23 +784,11 @@ public class MainFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_jButton9ActionPerformed
 
   private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    try {
-      try ( java.io.FileOutputStream fos = new java.io.FileOutputStream( "/home/solkin/fragments.cut" ) ) {
-        writeToStream( fos );
-      }
-    } catch ( IOException ex ) {
-      Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
-    }
+    ( new FileChooserDialog( this, true, true, file ) ).setVisible( true );
   }//GEN-LAST:event_jButton6ActionPerformed
 
   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    try {
-      try ( java.io.FileInputStream fis = new java.io.FileInputStream( "/home/solkin/fragments.cut" ) ) {
-        readFromStream( fis );
-      }
-    } catch ( IOException ex ) {
-      Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
-    }
+    ( new FileChooserDialog( this, true, false, file ) ).setVisible( true );
   }//GEN-LAST:event_jButton3ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
