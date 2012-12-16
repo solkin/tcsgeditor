@@ -289,7 +289,7 @@ public class MainFrame extends javax.swing.JFrame {
     /** Obtain editor panel **/
     EditorPanel editorPanel = getActiveEditorPanel();
     if ( editorPanel != null ) {
-      if(scaleFactor < 1) {
+      if ( scaleFactor < 1 ) {
         scaleFactor = 1;
       }
       /** Setting scale factor up **/
@@ -310,7 +310,9 @@ public class MainFrame extends javax.swing.JFrame {
    */
   public void setSelectedPrimitive( Primitive primitive ) {
     propertiesPanel.removeAll();
-    propertiesPanel.add( new PropertiesPanel( primitive ), BorderLayout.CENTER );
+    if ( primitive != null ) {
+      propertiesPanel.add( new PropertiesPanel( primitive ), BorderLayout.CENTER );
+    }
     propertiesPanel.updateUI();
   }
 

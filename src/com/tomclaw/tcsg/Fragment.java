@@ -79,8 +79,12 @@ public class Fragment {
   }
 
   public void paint( Graphics g ) {
+    /** Resetting fixed painted primitive **/
+    ScaleGraphics.fixedPainted = null;
     /** Cycling all items **/
     for ( int c = 0; c < items.length; c++ ) {
+      /** Setup scale graphics **/
+      ScaleGraphics.lastPainted = items[c];
       /** Drawing primitive **/
       items[c].paint( g );
     }

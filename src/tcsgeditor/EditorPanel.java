@@ -1,12 +1,18 @@
 package tcsgeditor;
 
 import com.tomclaw.tcsg.Fragment;
-import com.tomclaw.tcsg.Gabarite;
 import com.tomclaw.tcsg.Primitive;
 import com.tomclaw.tcsg.ScaleGraphics;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.image.ImageObserver;
+import java.text.AttributedCharacterIterator;
 
 /** 
  *
@@ -20,7 +26,7 @@ public class EditorPanel extends javax.swing.JPanel {
   private int startX, startY;
   private int activX, activY;
   private Primitive primitive;
-  private Gabarite selected;
+  private Graphics g;
 
   /** Creates new form EditorPanel */
   public EditorPanel( int templateWidth, int templateHeight ) {
@@ -63,6 +69,7 @@ public class EditorPanel extends javax.swing.JPanel {
 
   @Override
   public void paint( Graphics g ) {
+    this.g = g;
     /** Locating **/
     fragment.setDrawLocation( ( getWidth() - fragment.getDrawWidth() ) / 2,
             ( getHeight() - fragment.getDrawHeight() ) / 2 );
@@ -81,8 +88,6 @@ public class EditorPanel extends javax.swing.JPanel {
     fragment.paint( g );
     if ( primitive != null ) {
       primitive.paint( g );
-    }
-    if ( selected != null ) {
     }
     /** Showing time elapsed **/
     System.out.println( "Time: " + ( System.currentTimeMillis() - time ) );
@@ -156,7 +161,7 @@ public class EditorPanel extends javax.swing.JPanel {
         primitive.setLocation( startX, startY );
       } else {
         /** Selection **/
-        if ( fragment.getPrimitivesCount() > 0 ) {
+        /*if ( fragment.getPrimitivesCount() > 0 ) {
           Primitive[] items = fragment.getPrimitives();
           for ( int c = items.length - 1; c >= 0; c-- ) {
             Gabarite gabarite = items[c].getGabarite();
@@ -171,7 +176,11 @@ public class EditorPanel extends javax.swing.JPanel {
           }
           selected = null;
           repaint();
-        }
+        }*/
+        ScaleGraphics.fixedX = evt.getX();
+        ScaleGraphics.fixedY = evt.getY();
+        fragment.paint( g );
+        setSelectedPrimitive( ScaleGraphics.fixedPainted );
       }
       System.out.println( "Mouse Pressed (Locked)" );
     } else {
@@ -227,8 +236,7 @@ public class EditorPanel extends javax.swing.JPanel {
   }
 
   private void setSelectedPrimitive( Primitive primitive ) {
-    selected = primitive.getGabarite();
     TCSGEditor.mainFrame.setSelectedPrimitive( primitive );
-    repaint();
+    //repaint();
   }
 }
