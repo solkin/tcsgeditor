@@ -42,7 +42,7 @@ public class MainFrame extends javax.swing.JFrame {
     initToolPanel();
     setLocationRelativeTo( null );
     /** Sample fragment **/
-    resetFile();
+    resetFile( true );
   }
 
   /**
@@ -308,10 +308,10 @@ public class MainFrame extends javax.swing.JFrame {
    * and opening properties panel for this primitive
    * @param primitive 
    */
-  public void setSelectedPrimitive( Primitive primitive ) {
+  public void setSelectedPrimitive( EditorPanel editorPanel, Primitive primitive ) {
     propertiesPanel.removeAll();
     if ( primitive != null ) {
-      propertiesPanel.add( new PropertiesPanel( primitive ), BorderLayout.CENTER );
+      propertiesPanel.add( new PropertiesPanel( editorPanel, primitive ), BorderLayout.CENTER );
     }
     propertiesPanel.updateUI();
   }
@@ -354,7 +354,7 @@ public class MainFrame extends javax.swing.JFrame {
   }
 
   public void readFromStream( InputStream is ) {
-    resetFile();
+    resetFile( false );
     try {
       DataInputStream dis = new DataInputStream( is );
       /** Header **/
@@ -434,7 +434,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
   }
 
-  public final void resetFile() {
+  public final void resetFile( boolean isResetPath ) {
     DefaultTableModel model = ( ( DefaultTableModel ) jTable1.getModel() );
     model.getDataVector().removeAllElements();
     jTable1.updateUI();
@@ -442,7 +442,9 @@ public class MainFrame extends javax.swing.JFrame {
     propertiesPanel.removeAll();
     propertiesPanel.updateUI();
     time = 0;
-    file = null;
+    if ( isResetPath ) {
+      file = null;
+    }
     author = "TomClaw Software";
     description = "";
   }
@@ -738,7 +740,7 @@ public class MainFrame extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    resetFile();
+    resetFile( true );
   }//GEN-LAST:event_jButton1ActionPerformed
 
   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -70,6 +70,9 @@ public class EditorPanel extends javax.swing.JPanel {
   @Override
   public void paint( Graphics g ) {
     this.g = g;
+    /** Clearing **/
+    g.setColor( javax.swing.UIManager.getDefaults().getColor( "Panel.background" ) );
+    g.fillRect( 0, 0, getWidth(), getHeight() );
     /** Locating **/
     fragment.setDrawLocation( ( getWidth() - fragment.getDrawWidth() ) / 2,
             ( getHeight() - fragment.getDrawHeight() ) / 2 );
@@ -162,21 +165,21 @@ public class EditorPanel extends javax.swing.JPanel {
       } else {
         /** Selection **/
         /*if ( fragment.getPrimitivesCount() > 0 ) {
-          Primitive[] items = fragment.getPrimitives();
-          for ( int c = items.length - 1; c >= 0; c-- ) {
-            Gabarite gabarite = items[c].getGabarite();
-            System.out.println( gabarite.x1 + "<=" + startX + "&&" + gabarite.y1 + "<=" + startY
-                    + "&&" + gabarite.x2 + ">" + startX + "&&" + gabarite.y2 + ">" + startY );
-            if ( gabarite.x1 <= startX && gabarite.y1 <= startY
-                    && gabarite.x2 > startX && gabarite.y2 > startY ) {
-              System.out.println( "Item selected: " + c );
-              setSelectedPrimitive( items[c] );
-              return;
-            }
-          }
-          selected = null;
-          repaint();
-        }*/
+         Primitive[] items = fragment.getPrimitives();
+         for ( int c = items.length - 1; c >= 0; c-- ) {
+         Gabarite gabarite = items[c].getGabarite();
+         System.out.println( gabarite.x1 + "<=" + startX + "&&" + gabarite.y1 + "<=" + startY
+         + "&&" + gabarite.x2 + ">" + startX + "&&" + gabarite.y2 + ">" + startY );
+         if ( gabarite.x1 <= startX && gabarite.y1 <= startY
+         && gabarite.x2 > startX && gabarite.y2 > startY ) {
+         System.out.println( "Item selected: " + c );
+         setSelectedPrimitive( items[c] );
+         return;
+         }
+         }
+         selected = null;
+         repaint();
+         }*/
         ScaleGraphics.fixedX = evt.getX();
         ScaleGraphics.fixedY = evt.getY();
         fragment.paint( g );
@@ -225,7 +228,7 @@ public class EditorPanel extends javax.swing.JPanel {
 
   private void formMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_formMouseWheelMoved
     System.out.println( "Mouse Wheel: getPreciseWheelRotation: " + evt.getPreciseWheelRotation() );
-    TCSGEditor.mainFrame.updateScaleFactor( ( int ) ( ScaleGraphics.scaleFactor 
+    TCSGEditor.mainFrame.updateScaleFactor( ( int ) ( ScaleGraphics.scaleFactor
             - evt.getPreciseWheelRotation() ) );
   }//GEN-LAST:event_formMouseWheelMoved
 
@@ -236,7 +239,54 @@ public class EditorPanel extends javax.swing.JPanel {
   }
 
   private void setSelectedPrimitive( Primitive primitive ) {
-    TCSGEditor.mainFrame.setSelectedPrimitive( primitive );
+    TCSGEditor.mainFrame.setSelectedPrimitive( this, primitive );
     //repaint();
+  }
+
+  public void removePrimitive( Primitive primitive ) {
+    if ( primitive != null ) {
+      Primitive[] beItems = new Primitive[ fragment.getPrimitivesCount() - 1 ];
+      Primitive[] frItems = fragment.getPrimitives();
+      int i = 0;
+      for ( int c = 0; c < frItems.length; c++ ) {
+        if ( !frItems[c].equals( primitive ) ) {
+          beItems[i++] = frItems[c];
+        }
+      }
+      fragment.setPrimitives( beItems );
+    }
+  }
+
+  public void zOrderPrimitiveUp( Primitive primitive ) {
+    if ( primitive != null ) {
+      Primitive[] items = fragment.getPrimitives();
+      for ( int c = 0; c < items.length; c++ ) {
+        if ( items[c].equals( primitive ) ) {
+          if ( c < items.length - 1 ) {
+            Primitive item = items[c + 1];
+            items[c + 1] = items[c];
+            items[c] = item;
+            c++;
+          }
+        }
+      }
+      fragment.setPrimitives( items );
+    }
+  }
+
+  public void zOrderPrimitiveDown( Primitive primitive ) {
+    if ( primitive != null ) {
+      Primitive[] items = fragment.getPrimitives();
+      for ( int c = 0; c < items.length; c++ ) {
+        if ( items[c].equals( primitive ) ) {
+          if ( c > 0 ) {
+            Primitive item = items[c - 1];
+            items[c - 1] = items[c];
+            items[c] = item;
+          }
+        }
+      }
+      fragment.setPrimitives( items );
+    }
   }
 }

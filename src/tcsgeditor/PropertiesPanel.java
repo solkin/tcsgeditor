@@ -4,9 +4,12 @@ import com.tomclaw.tcsg.Primitive;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,7 +28,7 @@ public class PropertiesPanel extends javax.swing.JPanel {
   private final ArrayList<Component> panels;
 
   /** Creates new form PropertiesPanel */
-  public PropertiesPanel( Primitive primitive ) {
+  public PropertiesPanel( final EditorPanel editorPanel, final Primitive primitive ) {
     initComponents();
     this.primitive = primitive;
     this.fields = primitive.getFields();
@@ -56,6 +59,38 @@ public class PropertiesPanel extends javax.swing.JPanel {
       panels.add( cast( fields[c] ) );
       objectsPanel.add( panels.get( c ) );
     }
+    JButton jRemoveButton = new JButton("Удалить");
+    jRemoveButton.addActionListener( new ActionListener(){
+
+      @Override
+      public void actionPerformed( ActionEvent ae ) {
+        editorPanel.removePrimitive( primitive );
+        TCSGEditor.mainFrame.setSelectedPrimitive( editorPanel, null);
+        editorPanel.repaint();
+      }
+    } );
+    objectsPanel.add( jRemoveButton );
+    JButton jUpButton = new JButton("Поднять");
+    jUpButton.addActionListener( new ActionListener(){
+
+      @Override
+      public void actionPerformed( ActionEvent ae ) {
+        editorPanel.zOrderPrimitiveUp( primitive );
+        editorPanel.repaint();
+      }
+    } );
+    objectsPanel.add( jUpButton );
+    JButton jDownButton = new JButton("Опустить");
+    jDownButton.addActionListener( new ActionListener(){
+
+      @Override
+      public void actionPerformed( ActionEvent ae ) {
+        editorPanel.zOrderPrimitiveDown( primitive );
+        editorPanel.repaint();
+      }
+    } );
+    objectsPanel.add( jDownButton );
+    
     updateUI();
   }
 
