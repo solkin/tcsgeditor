@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -254,16 +255,27 @@ public class MainFrame extends javax.swing.JFrame {
    * @param color
    * @param name 
    */
-  public void setColor( Color color, String name ) {
-    DefaultTableModel model = ( ( DefaultTableModel ) jTable1.getModel() );
-    for ( int c = 0; c < model.getRowCount(); c++ ) {
-      String t_name = ( String ) model.getValueAt( c, 1 );
-      if ( t_name != null && t_name.equals( name ) ) {
-        model.setValueAt( color, c, 0 );
-        return;
+  public void setColor( Color color, String name )
+  {
+      setColor(color, name, true);
+  }
+  public void setColor( Color color, String name, boolean force ) {
+      DefaultTableModel model = ((DefaultTableModel) jTable1.getModel());
+      for (int c = 0; c < model.getRowCount(); c++)
+      {
+          String t_name = (String) model.getValueAt(c, 1);
+          if (t_name != null && t_name.equals(name))
+          {
+              if (force || JOptionPane.showConfirmDialog(this,
+                      "Такой цвет уже существует. Заменить?",
+                      "", JOptionPane.YES_NO_OPTION)==0)
+              {
+                  model.setValueAt(color, c, 0);
+              }
+              return;
+          }
       }
-    }
-    model.addRow( new Object[] { color, name } );
+      model.addRow(new Object[]{ color, name });
   }
 
   /**
@@ -794,7 +806,7 @@ public class MainFrame extends javax.swing.JFrame {
     ( new ColorDialog( this, true, null, new ColorListener() {
       @Override
       public void colorChanged( NamedColor namedColor ) {
-        setColor( namedColor, namedColor.getName() );
+        setColor( namedColor, namedColor.getName(), false );
       }
     } ) ).setVisible( true );
   }//GEN-LAST:event_jButton2ActionPerformed
