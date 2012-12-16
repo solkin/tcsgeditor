@@ -174,6 +174,12 @@ public class MainFrame extends javax.swing.JFrame {
   public Primitive getActivePrimitive() {
     return activePrimitive;
   }
+  
+  public void duplicateActivePrimitive()
+  {
+    Primitive n = (Primitive) activePrimitive.clone();
+    setActivePrimitive(n);
+  }
 
   /**
    * Returns active (selected) color
