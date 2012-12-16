@@ -48,7 +48,7 @@ public class EditorPanel extends javax.swing.JPanel {
 
     updateDrawSize();
   }
-  
+
   /** Creates new form EditorPanel */
   public EditorPanel( Fragment fragment ) {
     initComponents();
@@ -113,6 +113,11 @@ public class EditorPanel extends javax.swing.JPanel {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+      public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+        formMouseWheelMoved(evt);
+      }
+    });
     addMouseListener(new java.awt.event.MouseAdapter() {
       public void mousePressed(java.awt.event.MouseEvent evt) {
         formMousePressed(evt);
@@ -208,9 +213,15 @@ public class EditorPanel extends javax.swing.JPanel {
       System.out.println( "Mouse Dragged (Free)" );
     }
   }//GEN-LAST:event_formMouseDragged
+
+  private void formMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_formMouseWheelMoved
+    System.out.println( "Mouse Wheel: getPreciseWheelRotation: " + evt.getPreciseWheelRotation() );
+    TCSGEditor.mainFrame.updateScaleFactor( ( int ) ( ScaleGraphics.scaleFactor 
+            - evt.getPreciseWheelRotation() ) );
+  }//GEN-LAST:event_formMouseWheelMoved
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   // End of variables declaration//GEN-END:variables
-
   public Fragment getFigure() {
     return fragment;
   }
