@@ -178,6 +178,10 @@ public class PropertiesPanel extends javax.swing.JPanel {
     primitive.setFields( getProperties() );
     TCSGEditor.mainFrame.getActiveEditorPanel().updateUI();
   }
+  
+  public Primitive getPrimitive() {
+    return primitive;
+  }
 
   /** This method is called from within the constructor to
    * initialize the form.

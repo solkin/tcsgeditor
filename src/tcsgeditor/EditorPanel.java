@@ -286,4 +286,15 @@ public class EditorPanel extends javax.swing.JPanel {
       fragment.setPrimitives( items );
     }
   }
+
+  public Primitive removeLastPrimitive() {
+    if ( fragment.getPrimitivesCount() > 0 ) {
+      Primitive primitive = fragment.getPrimitives()[fragment.getPrimitivesCount() - 1];
+      Primitive[] items = new Primitive[ fragment.getPrimitivesCount() - 1 ];
+      System.arraycopy( fragment.getPrimitives(), 0, items, 0, fragment.getPrimitivesCount() - 1 );
+      fragment.setPrimitives( items );
+      return primitive;
+    }
+    return null;
+  }
 }
