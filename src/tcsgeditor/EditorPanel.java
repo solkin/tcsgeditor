@@ -5,14 +5,7 @@ import com.tomclaw.tcsg.Primitive;
 import com.tomclaw.tcsg.ScaleGraphics;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
 
 /** 
  *
@@ -155,14 +148,17 @@ public class EditorPanel extends javax.swing.JPanel {
   private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
     if ( evt.getX() >= fragment.getDrawX() && evt.getX() < fragment.getDrawX() + fragment.getDrawWidth()
             && evt.getY() >= fragment.getDrawY() && evt.getY() < fragment.getDrawY() + fragment.getDrawHeight() ) {
+      System.out.println( "Mouse Pressed (Locked) -->" );
       startX = ( evt.getX() - fragment.getDrawX() ) / ScaleGraphics.scaleFactor;
       startY = ( evt.getY() - fragment.getDrawY() ) / ScaleGraphics.scaleFactor;
       primitive = TCSGEditor.mainFrame.getActivePrimitive();
       if ( primitive != null ) {
+        System.out.println( "primitive != null" );
         /** Drawing **/
         primitive.setFigure( fragment );
         primitive.setLocation( startX, startY );
       } else {
+        System.out.println( "primitive == null" );
         /** Selection **/
         /*if ( fragment.getPrimitivesCount() > 0 ) {
          Primitive[] items = fragment.getPrimitives();
@@ -201,6 +197,7 @@ public class EditorPanel extends javax.swing.JPanel {
       items[items.length - 1] = primitive;
       fragment.setPrimitives( items );
       primitive = null;
+      TCSGEditor.mainFrame.duplicateActivePrimitive();
     }
   }//GEN-LAST:event_formMouseReleased
 
