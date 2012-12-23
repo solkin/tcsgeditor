@@ -98,20 +98,20 @@ public class Fragment {
     return getPropPoint( y, templateHeight, drawY, drawHeight );
   }
 
+  public int getAlignX( int x ) {
+    return getAlignPoint( x, templateWidth, drawX, drawWidth );
+  }
+
+  public int getAlignY( int y ) {
+    return getAlignPoint( y, templateHeight, drawY, drawHeight );
+  }
+
   public int getSecPropX( int x1, int x2 ) {
     return getPropX( x1 ) + getPropSize( x2 - x1, templateWidth, drawWidth );
   }
 
   public int getSecPropY( int y1, int y2 ) {
     return getPropY( y1 ) + getPropSize( y2 - y1, templateHeight, drawHeight );
-  }
-
-  public int getSecAlignX( int x1, int x2 ) {
-    return getPropX( x1 ) + getAlignSize( x2 - x1, templateWidth, drawWidth );
-  }
-
-  public int getSecAlignY( int y1, int y2 ) {
-    return getPropY( y1 ) + getAlignSize( y2 - y1, templateHeight, drawHeight );
   }
 
   public int getPropWidth( int width ) {
@@ -127,15 +127,18 @@ public class Fragment {
     return drawPoint + drawSize * point / templateSize;
   }
 
+  public int getAlignPoint( int point, int templateSize, int drawPoint, int drawSize ) {
+    /** Calculating proportional size **/
+    if ( ( templateSize - point ) == 1 ) {
+      return drawPoint + drawSize * ( point + 1 ) / templateSize 
+              - ScaleGraphics.scaleFactor;
+    }
+    return drawPoint + drawSize * point / templateSize;
+  }
+
   public int getPropSize( int size, int templateSize, int drawSize ) {
     /** Calculating proportional size **/
     return ( size + 1 ) * drawSize / templateSize - ScaleGraphics.scaleFactor;
-  }
-
-  public int getAlignSize( int size, int templateSize, int drawSize ) {
-    /** Calculating proportional size **/
-    return ( size + ( ( size > 0 ) ? 1 : 0 ) ) * drawSize / templateSize 
-            - ( ( size > 0 ) ? ScaleGraphics.scaleFactor : 0 );
   }
 
   /************* Absolute coordinates *************/

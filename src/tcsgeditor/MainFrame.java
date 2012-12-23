@@ -725,10 +725,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     jSplitPane1.setLeftComponent(jPanel1);
 
-    jSplitPane2.setDividerLocation(390);
+    jSplitPane2.setDividerLocation(370);
     jSplitPane2.setResizeWeight(1.0);
 
-    jSplitPane3.setDividerLocation(260);
+    jSplitPane3.setDividerLocation(180);
     jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
     jSplitPane3.setResizeWeight(0.5);
 
@@ -739,11 +739,11 @@ public class MainFrame extends javax.swing.JFrame {
     toolPanel.setLayout(toolPanelLayout);
     toolPanelLayout.setHorizontalGroup(
       toolPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 239, Short.MAX_VALUE)
+      .addGap(0, 247, Short.MAX_VALUE)
     );
     toolPanelLayout.setVerticalGroup(
       toolPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 255, Short.MAX_VALUE)
+      .addGap(0, 258, Short.MAX_VALUE)
     );
 
     jScrollPane4.setViewportView(toolPanel);
