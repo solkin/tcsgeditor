@@ -37,8 +37,8 @@ public class Line extends Primitive {
     if ( isProportional ) {
       ScaleGraphics.drawLine( g, fragment.getPropX( x1 ),
               fragment.getPropY( y1 ),
-              fragment.getSecPropX( x1, x2 ),
-              fragment.getSecPropY( y1, y2 ) );
+              fragment.getSecAlignX( x1, x2 ),
+              fragment.getSecAlignY( y1, y2 ) );
     } else {
       ScaleGraphics.drawLine( g, fragment.getAbsX( x1 ),
               fragment.getAbsY( y1 ),

@@ -35,6 +35,9 @@ public class PreviewDialog extends javax.swing.JDialog {
 
     jButton1 = new javax.swing.JButton();
     jPanel1 = new javax.swing.JPanel();
+    jButton2 = new javax.swing.JButton();
+    jButton3 = new javax.swing.JButton();
+    jButton4 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setTitle("Предпросмотр");
@@ -52,7 +55,7 @@ public class PreviewDialog extends javax.swing.JDialog {
       }
     });
 
-    jButton1.setText("Закрыть");
+    jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-close.png"))); // NOI18N
     jButton1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton1ActionPerformed(evt);
@@ -62,6 +65,27 @@ public class PreviewDialog extends javax.swing.JDialog {
     jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(123, 123, 123)));
     jPanel1.setLayout(new java.awt.BorderLayout());
 
+    jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-zoom-in.png"))); // NOI18N
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton2ActionPerformed(evt);
+      }
+    });
+
+    jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-zoom-original.png"))); // NOI18N
+    jButton3.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton3ActionPerformed(evt);
+      }
+    });
+
+    jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon-zoom-out.png"))); // NOI18N
+    jButton4.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton4ActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -70,7 +94,12 @@ public class PreviewDialog extends javax.swing.JDialog {
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addGap(0, 311, Short.MAX_VALUE)
+            .addComponent(jButton2)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton3)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton4)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
             .addComponent(jButton1))
           .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
@@ -79,9 +108,13 @@ public class PreviewDialog extends javax.swing.JDialog {
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jButton1)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jButton2)
+          .addComponent(jButton3)
+          .addComponent(jButton4)
+          .addComponent(jButton1))
         .addContainerGap())
     );
 
@@ -102,8 +135,28 @@ public class PreviewDialog extends javax.swing.JDialog {
     ScaleGraphics.scaleFactor = scaleFactor;
     System.out.println( "Closing" );
   }//GEN-LAST:event_formWindowClosed
+
+  private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    ScaleGraphics.scaleFactor++;
+    previewPanel.updateUI();
+  }//GEN-LAST:event_jButton2ActionPerformed
+
+  private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    ScaleGraphics.scaleFactor = 1;
+    previewPanel.updateUI();
+  }//GEN-LAST:event_jButton3ActionPerformed
+
+  private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    if ( ScaleGraphics.scaleFactor > 1 ) {
+      ScaleGraphics.scaleFactor--;
+      previewPanel.updateUI();
+    }
+  }//GEN-LAST:event_jButton4ActionPerformed
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
+  private javax.swing.JButton jButton2;
+  private javax.swing.JButton jButton3;
+  private javax.swing.JButton jButton4;
   private javax.swing.JPanel jPanel1;
   // End of variables declaration//GEN-END:variables
 }

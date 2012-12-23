@@ -106,6 +106,14 @@ public class Fragment {
     return getPropY( y1 ) + getPropSize( y2 - y1, templateHeight, drawHeight );
   }
 
+  public int getSecAlignX( int x1, int x2 ) {
+    return getPropX( x1 ) + getAlignSize( x2 - x1, templateWidth, drawWidth );
+  }
+
+  public int getSecAlignY( int y1, int y2 ) {
+    return getPropY( y1 ) + getAlignSize( y2 - y1, templateHeight, drawHeight );
+  }
+
   public int getPropWidth( int width ) {
     return getPropSize( width, templateWidth, drawWidth );
   }
@@ -122,6 +130,12 @@ public class Fragment {
   public int getPropSize( int size, int templateSize, int drawSize ) {
     /** Calculating proportional size **/
     return ( size + 1 ) * drawSize / templateSize - ScaleGraphics.scaleFactor;
+  }
+
+  public int getAlignSize( int size, int templateSize, int drawSize ) {
+    /** Calculating proportional size **/
+    return ( size + ( ( size > 0 ) ? 1 : 0 ) ) * drawSize / templateSize 
+            - ( ( size > 0 ) ? ScaleGraphics.scaleFactor : 0 );
   }
 
   /************* Absolute coordinates *************/
