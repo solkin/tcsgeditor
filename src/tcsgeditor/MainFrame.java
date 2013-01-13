@@ -21,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -431,9 +430,8 @@ public class MainFrame extends javax.swing.JFrame {
       if ( !path.endsWith( ".dig" ) ) {
         path += ".dig";
       }
-      try ( java.io.FileOutputStream fos = new java.io.FileOutputStream( path ) ) {
-        writeToStream( fos );
-      }
+      java.io.FileOutputStream fos = new java.io.FileOutputStream( path );
+      writeToStream( fos );
     } catch ( IOException ex ) {
       Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
     }
@@ -442,9 +440,8 @@ public class MainFrame extends javax.swing.JFrame {
   public void openFromFile( File file ) {
     MainFrame.file = file;
     try {
-      try ( java.io.FileInputStream fis = new java.io.FileInputStream( file ) ) {
-        readFromStream( fis );
-      }
+      java.io.FileInputStream fis = new java.io.FileInputStream( file );
+      readFromStream( fis );      
     } catch ( IOException ex ) {
       Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
     }

@@ -3,7 +3,6 @@ package tcsgeditor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -29,7 +28,7 @@ public class TCSGEditor {
       // UIManager.setLookAndFeel( "com.pagosoft.plaf.PgsLookAndFeel" );
       UIManager.setLookAndFeel( "com.lipstikLF.LipstikLookAndFeel" );
       // UIManager.setLookAndFeel( "net.infonode.gui.laf.InfoNodeLookAndFeel" );
-    } catch ( ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex ) {
+    } catch ( Throwable ex ) {
       Logger.getLogger( TCSGEditor.class.getName() ).log( Level.SEVERE, null, ex );
     }
     mainFrame = new MainFrame();

@@ -224,9 +224,9 @@ public class EditorPanel extends javax.swing.JPanel {
   }//GEN-LAST:event_formMouseDragged
 
   private void formMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_formMouseWheelMoved
-    System.out.println( "Mouse Wheel: getPreciseWheelRotation: " + evt.getPreciseWheelRotation() );
+    System.out.println( "Mouse Wheel: getPreciseWheelRotation: " + evt.getWheelRotation() );
     TCSGEditor.mainFrame.updateScaleFactor( ( int ) ( ScaleGraphics.scaleFactor
-            - evt.getPreciseWheelRotation() ) );
+            - evt.getWheelRotation() ) );
   }//GEN-LAST:event_formMouseWheelMoved
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
