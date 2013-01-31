@@ -1,3 +1,6 @@
+word - 2 bytes, big endian
+dword - 4 bytes, big endian
+
 [byte] * 4 = "TCSG"
 [word] = version
 [word][string] - author
@@ -5,14 +8,14 @@
 	1 - colors
 	2 - fragment
 [dword] - block size
-Для 1 - colors
+For 1 - colors
 [word] - colors count
 {
 	[dword] - color
 	[word][string] - name
 	...
 }
-Для 2 - fragments
+For 2 - fragments
 [word] - fragments count
 {
 	[word][string] - name
