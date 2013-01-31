@@ -5,8 +5,9 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 /**
- *
- * @author solkin
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
+ * @author Solkin
  */
 public class FileChooserDialog extends javax.swing.JDialog {
 
@@ -21,7 +22,7 @@ public class FileChooserDialog extends javax.swing.JDialog {
       jFileChooser1.setSelectedFile( file );
     }
     jFileChooser1.setDialogType( isSave ? JFileChooser.SAVE_DIALOG : JFileChooser.OPEN_DIALOG );
-    jFileChooser1.setFileFilter( new ExtensionFileFilter( "TomClaw Scalable Graphics Digest (*.dig)", new String[] { "dig" } ) );
+    jFileChooser1.setFileFilter( new ExtensionFileFilter( "TomClaw Scalable Graphics Digest (*.dig)", new String[]{ "dig" } ) );
     setLocationRelativeTo( parent );
   }
 
@@ -80,7 +81,7 @@ class ExtensionFileFilter extends FileFilter {
   String extensions[];
 
   public ExtensionFileFilter( String description, String extension ) {
-    this( description, new String[] { extension } );
+    this( description, new String[]{ extension } );
   }
 
   public ExtensionFileFilter( String description, String extensions[] ) {

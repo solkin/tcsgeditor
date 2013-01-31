@@ -5,8 +5,9 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 
 /**
- *
- * @author solkin
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
+ * @author Solkin
  */
 public class TCSGEditor {
 

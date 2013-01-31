@@ -1,15 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package tcsgeditor;
 
 import java.util.Calendar;
 import java.util.Date;
 
 /**
- *
- * @author solkin
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
+ * @author Solkin
  */
 public class InfoDialog extends javax.swing.JDialog {
 
@@ -173,7 +170,6 @@ public class InfoDialog extends javax.swing.JDialog {
     MainFrame.description = jTextPane1.getText();
     dispose();
   }//GEN-LAST:event_jButton2ActionPerformed
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton2;

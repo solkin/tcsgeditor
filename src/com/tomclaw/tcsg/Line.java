@@ -7,7 +7,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
- *
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
  * @author Solkin
  */
 public class Line extends Primitive {
@@ -71,7 +72,7 @@ public class Line extends Primitive {
 
   @Override
   public Object[][] getFields() {
-    return new Object[][] {
+    return new Object[][]{
               { "Начальный X", Integer.valueOf( x1 ) },
               { "Начальный Y", Integer.valueOf( y1 ) },
               { "Конецный X", Integer.valueOf( x2 ) },

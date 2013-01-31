@@ -8,8 +8,9 @@ import java.io.IOException;
 import tcsgeditor.Selector;
 
 /**
- *
- * @author solkin
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
+ * @author Solkin
  */
 public class Gradient extends Primitive {
 
@@ -93,7 +94,7 @@ public class Gradient extends Primitive {
 
   @Override
   public Object[][] getFields() {
-    return new Object[][] {
+    return new Object[][]{
               { "Положение X", Integer.valueOf( x ) },
               { "Положение Y", Integer.valueOf( y ) },
               { "Ширина", Integer.valueOf( width ) },
@@ -102,7 +103,7 @@ public class Gradient extends Primitive {
               { "Цвет конечный", new Color( colorFinl ) },
               { "Пропорциональность", Boolean.valueOf( isProportional ) },
               { "Заполнение", Boolean.valueOf( isFill ) },
-              { "Направление", new Selector( new String[] { "Вертикальный",
+              { "Направление", new Selector( new String[]{ "Вертикальный",
                   "Горизонтальный" }, isVertical ? 0 : 1 ) }
             };
   }

@@ -7,8 +7,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
- *
- * @author solkin
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
+ * @author Solkin
  */
 public class Point extends Primitive {
 
@@ -64,7 +65,7 @@ public class Point extends Primitive {
 
   @Override
   public Object[][] getFields() {
-    return new Object[][] {
+    return new Object[][]{
               { "Положение X", Integer.valueOf( x ) },
               { "Положение Y", Integer.valueOf( y ) },
               { "Цвет", new Color( color ) },

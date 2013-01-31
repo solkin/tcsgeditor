@@ -5,8 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- *
- * @author solkin
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
+ * @author Solkin
  */
 public class PreviewPanel extends javax.swing.JPanel {
 
@@ -40,20 +41,20 @@ public class PreviewPanel extends javax.swing.JPanel {
   public PreviewPanel( Fragment fragment ) {
     //this.fragment = fragment;
     initComponents();
-    
+
     //setPreferredSize( new Dimension( 10, 10 ) );
     this.fragment = fragment;
     /*fragment = new Fragment( 5, 5, 0, 0, 240, 50 );
-    this.fragment = fragment;
-    Primitive[] items1 = new Primitive[ 5 ];
+     this.fragment = fragment;
+     Primitive[] items1 = new Primitive[ 5 ];
 
-    items1[0] = new Gradient( 0, 0, 4, 2, actGradFrom, actGradMidd, true, true, true, fragment );
-    items1[1] = new Gradient( 0, 3, 4, 1, actGradAftr, actGradFinl, true, true, true, fragment );
-    items1[2] = new Rect( 0, 0, 5, 5, actBotBorder, false, false, fragment );
-    items1[3] = new Line( 0, 0, -1, 0, actOnlTopBorder, false, fragment );
-    items1[4] = new Line( 1, -1, -1, -1, actInOnlBotBorder, false, fragment );
+     items1[0] = new Gradient( 0, 0, 4, 2, actGradFrom, actGradMidd, true, true, true, fragment );
+     items1[1] = new Gradient( 0, 3, 4, 1, actGradAftr, actGradFinl, true, true, true, fragment );
+     items1[2] = new Rect( 0, 0, 5, 5, actBotBorder, false, false, fragment );
+     items1[3] = new Line( 0, 0, -1, 0, actOnlTopBorder, false, fragment );
+     items1[4] = new Line( 1, -1, -1, -1, actInOnlBotBorder, false, fragment );
 
-    fragment.setPrimitives( items1 );*/
+     fragment.setPrimitives( items1 );*/
 
     updateDrawSize();
   }

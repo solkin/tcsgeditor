@@ -18,8 +18,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- *
- * @author solkin
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
+ * @author Solkin
  */
 public class PropertiesPanel extends javax.swing.JPanel {
 
@@ -59,20 +60,18 @@ public class PropertiesPanel extends javax.swing.JPanel {
       panels.add( cast( fields[c] ) );
       objectsPanel.add( panels.get( c ) );
     }
-    JButton jRemoveButton = new JButton("Удалить");
-    jRemoveButton.addActionListener( new ActionListener(){
-
+    JButton jRemoveButton = new JButton( "Удалить" );
+    jRemoveButton.addActionListener( new ActionListener() {
       @Override
       public void actionPerformed( ActionEvent ae ) {
         editorPanel.removePrimitive( primitive );
-        TCSGEditor.mainFrame.setSelectedPrimitive( editorPanel, null);
+        TCSGEditor.mainFrame.setSelectedPrimitive( editorPanel, null );
         editorPanel.repaint();
       }
     } );
     objectsPanel.add( jRemoveButton );
-    JButton jUpButton = new JButton("Поднять");
-    jUpButton.addActionListener( new ActionListener(){
-
+    JButton jUpButton = new JButton( "Поднять" );
+    jUpButton.addActionListener( new ActionListener() {
       @Override
       public void actionPerformed( ActionEvent ae ) {
         editorPanel.zOrderPrimitiveUp( primitive );
@@ -80,9 +79,8 @@ public class PropertiesPanel extends javax.swing.JPanel {
       }
     } );
     objectsPanel.add( jUpButton );
-    JButton jDownButton = new JButton("Опустить");
-    jDownButton.addActionListener( new ActionListener(){
-
+    JButton jDownButton = new JButton( "Опустить" );
+    jDownButton.addActionListener( new ActionListener() {
       @Override
       public void actionPerformed( ActionEvent ae ) {
         editorPanel.zOrderPrimitiveDown( primitive );
@@ -90,7 +88,7 @@ public class PropertiesPanel extends javax.swing.JPanel {
       }
     } );
     objectsPanel.add( jDownButton );
-    
+
     updateUI();
   }
 
@@ -178,7 +176,7 @@ public class PropertiesPanel extends javax.swing.JPanel {
     primitive.setFields( getProperties() );
     TCSGEditor.mainFrame.getActiveEditorPanel().updateUI();
   }
-  
+
   public Primitive getPrimitive() {
     return primitive;
   }

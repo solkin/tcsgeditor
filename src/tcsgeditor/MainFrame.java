@@ -24,8 +24,9 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author solkin
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
+ * @author Solkin
  */
 public class MainFrame extends javax.swing.JFrame {
 
@@ -441,7 +442,7 @@ public class MainFrame extends javax.swing.JFrame {
     MainFrame.file = file;
     try {
       java.io.FileInputStream fis = new java.io.FileInputStream( file );
-      readFromStream( fis );      
+      readFromStream( fis );
     } catch ( IOException ex ) {
       Logger.getLogger( MainFrame.class.getName() ).log( Level.SEVERE, null, ex );
     }

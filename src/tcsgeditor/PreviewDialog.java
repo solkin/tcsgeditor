@@ -5,8 +5,9 @@ import com.tomclaw.tcsg.ScaleGraphics;
 import java.awt.BorderLayout;
 
 /**
- *
- * @author solkin
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
+ * @author Solkin
  */
 public class PreviewDialog extends javax.swing.JDialog {
 
@@ -110,11 +111,12 @@ public class PreviewDialog extends javax.swing.JDialog {
         .addContainerGap()
         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jButton2)
-          .addComponent(jButton3)
-          .addComponent(jButton4)
-          .addComponent(jButton1))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jButton2)
+            .addComponent(jButton3)
+            .addComponent(jButton4)))
         .addContainerGap())
     );
 

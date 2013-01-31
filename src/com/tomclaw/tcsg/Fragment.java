@@ -6,7 +6,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
- *
+ * Solkin Igor Viktorovich, TomClaw Software, 2003-2013
+ * http://www.tomclaw.com/
  * @author Solkin
  */
 public class Fragment {
@@ -30,13 +31,13 @@ public class Fragment {
   }
 
   public Fragment( Fragment fragment ) {
-    /** Clonning fragment **/
+    /** Cloning fragment **/
     this( fragment.templateWidth, fragment.templateHeight, fragment.drawX,
             fragment.drawY, fragment.drawWidth, fragment.drawHeight );
     /** Cycling all items **/
     items = new Primitive[ fragment.items.length ];
     for ( int c = 0; c < fragment.items.length; c++ ) {
-      /** Clonning primitive **/
+      /** Cloning primitive **/
       Primitive primitive = ( Primitive ) fragment.items[c].clone();
       primitive.setFigure( Fragment.this );
       items[c] = primitive;
@@ -130,7 +131,7 @@ public class Fragment {
   public int getAlignPoint( int point, int templateSize, int drawPoint, int drawSize ) {
     /** Calculating proportional size **/
     if ( ( templateSize - point ) == 1 ) {
-      return drawPoint + drawSize * ( point + 1 ) / templateSize 
+      return drawPoint + drawSize * ( point + 1 ) / templateSize
               - ScaleGraphics.scaleFactor;
     }
     return drawPoint + drawSize * point / templateSize;
