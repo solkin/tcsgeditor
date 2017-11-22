@@ -1,6 +1,1 @@
-*.class
-*.zip
-
-# NetBeans folders #
-build/
-dist/
+out/
